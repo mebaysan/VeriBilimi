@@ -1,6 +1,8 @@
 - [Giriş](#giriş)
 - [Bilgi Nedir?](#bilgi-nedir)
 - [Bilgi Piramidi Nedir?](#bilgi-piramidi-nedir)
+- [Veri Bilimi ve Veri Bilimci Nedir?](#veri-bilimi-ve-veri-bilimci-nedir)
+- [Veriden Faydalı Bilgi Çıkarmak](#veriden-faydalı-bilgi-çıkarmak)
 - [Veri Bilimi Uygulama Şeması](#veri-bilimi-uygulama-şeması)
   - [CRISP-DM: İş Anlayışı](#crisp-dm-i̇ş-anlayışı)
 - [Makine Öğrenimi Nedir?](#makine-öğrenimi-nedir)
@@ -52,6 +54,24 @@ Ackoof'un sınıflandırmasına dayanan DIKW (Data-Information-Knowledge-Wisdom)
 Tüm bu DIKW hiyerarşisine (Veri -> Enformasyon -> Bilgi -> Bilgelik) **Bilgi Piramidi** denmektedir.
 ![bilgi piramidi](./assets/1-bilgi-piramidi.png) 
 
+# Veri Bilimi ve Veri Bilimci Nedir?
+Veri bilimi **multidisipliner bir alandır**. Kısaca veriden faydalı bilgi çıkarma sürecidir. 
+![data science multi](./assets/4-data-science-multi.png)
+
+Bu süreci yöneten kişiye ise **veri bilimci** denmektedir. Aşağıdaki görselde bir veri bilimcide bulunan/bulunması gereken özellikler gösterilmiştir.
+![modern data scientist](./assets/5-modern-data-scientist.png)
+
+# Veriden Faydalı Bilgi Çıkarmak
+Veriden faydalı bilgi çıkarmak için temelde 4 adet yaklaşım vardır.
+1. Betimleyici Analitik (Descriptive Analytics)
+   - Verilerin betimlemesini yaparız. Veriler **Ne olmuş?** sorusuna cevap verir. Mevcut durumu resmeder.
+2. Teşhis/Tanı Analitiği (Diagnoistic Analytics)
+   - Veriler **Neden Olmuş?** sorusuna cevap verir.
+3. Tahminsel Analitik (Predictive Analytics)
+   - Veriler **Ne Olacak?** sorusuna cevap verir. İş süreçlerini geleceğe yönelik optimize etmemizi sağlar.
+4. Yönergeli Analitik (Prescriptive Analytics)
+   - Veriler **Ne Olmalı?/Nasıl Olmalı?** gibi sorulara cevap verir.
+
 # Veri Bilimi Uygulama Şeması
 1. Problemi Anlamak
 2. Veri Toplamak
@@ -79,6 +99,7 @@ Tüm bu DIKW hiyerarşisine (Veri -> Enformasyon -> Bilgi -> Bilgelik) **Bilgi P
 5. Kullanıma Sokma
 
 ![crisp-dm](./assets/3-crisp-dm.png)
+
 
 # Makine Öğrenimi Nedir?
 Makine öğrenimi, bizim bilgi piramidinde 2. basamaktan (Enformasyon) 3. basamağa (Bilgi) çıkmamızı sağlar. <br>
