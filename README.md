@@ -14,6 +14,7 @@
   - [Kaggle](#kaggle)
   - [Google Data Set Search](#google-data-set-search)
   - [İBB Açık Veri Portalı](#i̇bb-açık-veri-portalı)
+  - [DrDataStats](#drdatastats)
 - [Kaynakça](#kaynakça)
 
 
@@ -145,6 +146,10 @@ Temelde 2'ye ayrılmaktadır.
 
 ## İBB Açık Veri Portalı
 [İBB Açık Veri Portalı](https://data.ibb.gov.tr/) İstanbul Büyükşehir Belediyesi tarafından geliştirilmiş, İstanbul'a ait verilerin bulunduğu platformdur. 
+
+## DrDataStats
+[DrDataStats](https://www.drdatastats.com/) mottosu "Sadece Veri, Sadece İstatistik (Only Data, Only Statistics)" olan web sitesidir. Aynı zamanda [Din](https://www.drdatastats.com/din/) bölümü çok hoşuma gitti.
+
 # Kaynakça
 1. Gülseçen, Sevinç. (Ed.) (2015). Bilgi Yönetimi. İstanbul: Papatya Yayıncılık
 2. Gülseçen, Sevinç. (Ed.) (2015). Bilgi Yönetimi. İstanbul: Papatya Yayıncılık
