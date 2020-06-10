@@ -154,7 +154,7 @@ Kısaca standart sapmanın karesidir. Yani ortalamadan olan sapmaların kareleri
 [Standart Sapma](#standart-sapma-standard-deviation) başlığında bulduğumuz standart sapmanın karesi varyanstır -> s = 10.97, s<sup>2</sup> = 120.34
 
 ### Çarpıklık (Skewness)
-Bir değişkenin (serinin) dağılımının simetrik olamayışıdır. **Simetrik olmayan değişkenleri medyan ile temsil etmemiz (ölçmemiz) gerektiğini biliyoruz :innocent: <br>
+Bir değişkenin (serinin) dağılımının simetrik olamayışıdır. **Simetrik olmayan değişkenleri medyan ile temsil etmemiz (ölçmemiz) gerektiğini biliyoruz** :innocent: <br>
 
 ![skewness](./assets/7.png)
 
