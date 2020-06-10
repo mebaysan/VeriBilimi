@@ -18,6 +18,12 @@
     - [Çarpıklık (Skewness)](#çarpıklık-skewness)
       - [Pearson Çarpıklık Katsayısı](#pearson-çarpıklık-katsayısı)
     - [Basıklık (Kurtosis)](#basıklık-kurtosis)
+- [İstatistiksel Düşünce Modelleri](#i̇statistiksel-düşünce-modelleri)
+- [İstatistiksel Düşünce Düzeyleri](#i̇statistiksel-düşünce-düzeyleri)
+  - [Kişiye Özgülük (Seviye 1)](#kişiye-özgülük-seviye-1)
+  - [Geçici (Seviye 2)](#geçici-seviye-2)
+  - [Nicel (Seviye 3)](#nicel-seviye-3)
+  - [Analitik (Seviye 4)](#analitik-seviye-4)
 
 # Veri Okuryazarlığı Nedir?
 Her türden veri tipini, değişken ve ölçek türlerini tanımlayabilme, betimsel istatistikleri ve istatistiksel grafikleri kullanarak veri değerlendirme yeteneğidir.<br>
@@ -200,3 +206,29 @@ s<sup>4</sup> = (10.97)<sup>4</sup> = 14481.93
 
 m<sub>4</sub> / s<sup>4</sup> = 37224.33 / 14481.93 = 2.57 ise dağılım basıktır. BK < 3
 
+
+# İstatistiksel Düşünce Modelleri
+Veri okuryazarlığından veri analitiğine giden yolu modelleyen yol göstericilerdir. 
+
+Akademik dünya ve eğitim dünyası için geliştirilen birden fazla modeller vardır. Bu modellerin genel amacı; bir bireyin veriye ilk dokunduğu andan son aşaması olan  veriyle ilgili yorumlar yapabilme ve analitik çıkarımlarda bulunma süreçlerini modelleyen teorik çalışmalardır. Bunlardan bazıları:
+- Ben-Zvi ve Friedlander (1997)
+- Jones ve diğerleri (2000)
+- Wild ve Pfannkuch (1999)
+- Hoerl ve Snee (2001)
+- Mooney (2002)
+  - Diğer düşünce modellerine göre görece daha kolay bir modeldir. Temelde 4 aşamadan oluşur.
+    1. Verinin Tanımlanması
+    2. Verinin Organize Edilmesi ve İndirgenmesi
+    3. Veri Gösterimi
+    4. Verinin Analiz Edilmesi ve Yorumlanması
+
+
+# İstatistiksel Düşünce Düzeyleri
+## Kişiye Özgülük (Seviye 1)
+Bu basamakta kişiler veri setlerine bakarak verideki değişkenleri vb. anlamlandıramazlar. Mod, medyan vb. terimleri kullanarak bir çıktı elde edemezler. Veri ile ilk temas anındaki okur yazarlıktan yoksun olunan seviyedir.
+## Geçici (Seviye 2)
+Nicel düşünmenin öneminin farkedilmeye başlandığı seviyedir. Her zaman doğru olmasa da merkezi yayılım ve eğilim ölçüleri yorumlanabilir ve sayılarla ifade edilebilir hale gelinir. Veri üzerindeki bakış açısı tek yönlüdür. Veri temsilleri veya veri analizlerine dair bağlantılar tam anlamıyla kurulamaz.
+## Nicel (Seviye 3)
+Merkezi eğilim ve yayılım ölçülerinin doğru bir şekilde anlaşılmaya başlandığı basamaktır. Kişi bu seviyede istatistiksel kararlar almak için nicel verilere başvurabilir.Bağlam ve verinin ikisininde bilincindedir.
+## Analitik (Seviye 4)
+Veriyi inceleme, yorumlama ve analiz etmede analitik bir yaklaşım kullanılır. Veri ve bağlam arasında bir ilişki kurulur ve bu ilişkiye kanıtlar gösterilebilir. 
