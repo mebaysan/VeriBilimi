@@ -9,12 +9,12 @@
     - [2 sayı arasında x adet sayı oluşturmak (np.linspace)](#2-sayı-arasında-x-adet-sayı-oluşturmak-nplinspace)
     - [Dağılımını Kendimiz Belirttiğimiz ndarray Oluşturmak (np.random.normal)](#dağılımını-kendimiz-belirttiğimiz-ndarray-oluşturmak-nprandomnormal)
     - [Rastgele Değerlerden Oluşan ndarray (np.random.randint)](#rastgele-değerlerden-oluşan-ndarray-nprandomrandint)
+  - [ndarray Özellikleri](#ndarray-özellikleri)
+  - [Array Yeniden Şekillendirmek (reshape)](#array-yeniden-şekillendirmek-reshape)
+  - [Array Birleştirme (concatenate)](#array-birleştirme-concatenate)
+  - [Array Ayırma (split)](#array-ayırma-split)
+  - [Sıralama (sort)](#sıralama-sort)
 - [Pandas](#pandas)
-
-
-
-
-
 
 # Veri Manipülasyonu (NumPy & Pandas)
 # NumPy
@@ -150,6 +150,171 @@ print(nd_array)
  [18 13 13 17]]
 ```
 
+## ndarray Özellikleri
+Oluşturduğumuz ndarray ile ilgili özellikleri temelde 4 fonksiyon ile öğrenebiliriz
+- ndim -> boyut sayısı
+- shape -> boyut bilgisi
+- size -> toplam eleman sayısı
+- dtype -> array veri tipi
+```
+nd = np.random.randint(0,10,10)
 
+print(nd)
+>>> [2 9 6 3 2 1 8 7 5 3]
+
+print(nd.ndim)
+>>> 1
+
+print(nd.shape)
+>>> (10,) # bu nd değişkeni tek boyutlu olduğundan boyuttaki eleman sayısını verdi
+
+print(nd.size)
+>>> 10
+
+print(nd.dtype)
+>>> int64
+```
+
+## Array Yeniden Şekillendirmek (reshape)
+Oluşturduğumuz ndarray üzerinden yeni bir  nd array oluşturmak istersek reshape fonksiyonunu kullanmamız gerekmektedir. <br>
+Fonksiyonların çıktısı matris veya vektör olduğundan biz de bunları tekrar istediğimiz
+şekilde boyutlandırabiliriz. Bu işleme reshape denmektedir.<br>Mesela örnek olarak aşağıda oluşturduğumuz nd adındaki ndarray'i yeniden boyutlandırarak 3x3'lük bir ndarray haline getirdik ve bunu rs değişkenine atadık:
+```
+nd = np.arange(1,10)
+
+rs = nd.reshape(3,3)
+
+print(rs)
+
+>>> [[1 2 3]
+ [4 5 6]
+ [7 8 9]]
+```
+
+Bazı durumlarda bazı fonksiyonlar tek boyutlu arrayleri (vektör) kabul etmemektedir.
+Bu tür durumlarda tek boyutlu arrayimizi (vektör) vektör halindeki yapısını bozmadan
+matris haline getirebiliriz. Bunun için de reshape fonksiyonunu kullanabiliriz. <br> Örnek olarak aşağıda doğrusal vektörümüzü 1x9'luk bir matris haline getiriyoruz. Gördüğümüz gibi yeni oluşan `arr_degisen` arrayimiz 2 boyutlu olmuştur fakat vektör halindeki bilgileri/yapısı bozulmamıştır. 
+```
+arr = np.arange(1,10)
+print(arr)
+>>> [1 2 3 4 5 6 7 8 9]
+###############################
+
+arr_degisen = arr.reshape((1,9))
+print(arr_degisen)
+>>> [[1 2 3 4 5 6 7 8 9]]
+print(arr_degisen.ndim)
+>>> 2
+```
+
+## Array Birleştirme (concatenate)
+ndarray'leri birleştirmek istersek `concatenate` fonksiyonunu kullanıyoruz. 
+
+Vektörleri birleştirmek
+```
+x = np.array([1,2,3])
+y = np.array([4,5,6])
+z = np.array([7,8,9])
+xyz = np.concatenate([x,y,z])
+print(xyz)
+>>> [1 2 3 4 5 6 7 8 9]
+```
+
+Matrisleri satır bazında birleştirmek
+```
+x = np.zeros((3,4),dtype='int')
+y = np.ones((3,4),dtype='int')
+xy = np.concatenate([x,y])
+>>> 
+[[0 0 0 0]
+ [0 0 0 0]
+ [0 0 0 0]
+ [1 1 1 1]
+ [1 1 1 1]
+ [1 1 1 1]]
+```
+Eğer sütun bazında birleştirmek istersek `axis` parametresini `1` olarak vermemiz gerekmektedir. Yukarıda satır bazında birleştirmesinin sebebi de axis parametresinin default olarak 0 değerini almasıdır. `0` satır'ı, `1` sütunu temsil eder.
+```
+# axis = 0 veya 1 değerlerini alabilir. 0 satırları 1 sütunları temsil eder
+x = np.zeros((3,4),dtype='int')
+y = np.ones((3,4),dtype='int')
+xy = np.concatenate([x,y],axis=1)
+print(xy)
+>>>
+[1 2 3 4 5 6 7 8 9]
+[[0 0 0 0 1 1 1 1]
+ [0 0 0 0 1 1 1 1]
+ [0 0 0 0 1 1 1 1]]
+```
+
+## Array Ayırma (split)
+Arrayleri ayırmak (parçalamak) istersek `split` fonksiyonunu kullanmalıyız. İlk parametre 0. indexten kaçıncı indexe kadar bölünecek, 2. parametre ilk parametreden itibaren kaçıncı indexe kadar bölüneceği ifade eder.<br>
+Aşağıdaki örnek x ndarray'ini önce 3. indexe **kadar** ve 3'ten 5'e kadar böler, kalanı da en son bir ndarray'de toplar.
+```
+x = np.array([1,2,3,99,99,3,2,1])
+
+spl = np.split(x,[3,5])
+
+print(spl)
+
+>>> [array([1, 2, 3]), array([99, 99]), array([3, 2, 1])]
+```
+Demek ki bu örnek (np.split(x,[3,5])) bize 3 adet ndarray return ediyor. Bu return edilen değerleri sırasıyla değişkenlere atamak için aşağıdaki gibi bir kullanım yapabiliriz. Bunu Pure Python'da da kullanabiliyoruz.
+```
+x = np.array([1,2,3,99,99,3,2,1])
+
+a,b,c = np.split(x,[3,5])
+
+print(a,b,c)
+
+>>> [1 2 3] [99 99] [3 2 1]
+``` 
+
+Matrisleri bölmek için ise şu şekilde kullanım yapabiliriz.<br> Aşağıdaki örnekte matrisi iki parçaya böldük ve **dikey** olarak ilk parçanın yanına ekledik. Bunun için `vsplit` fonksiyonunu kullandık. Aynı şekilde yukarıdaki gibi böldüğümüz matrisi `ust` ve `alt` adında 2 değişkene atadık.
+```
+arr = np.arange(0,16,1).reshape([4,4]) # 4x4'lük bir matrisimiz oldu. 
+
+print(np.vsplit(arr,[2])) # ilk parametre hangi ndarray bölünecek, 2. parametre hangi elemana kadar bölünecek
+
+>>> [array([[0, 1, 2, 3],
+       [4, 5, 6, 7]]), array([[ 8,  9, 10, 11],
+       [12, 13, 14, 15]])]
+
+ust,alt = np.vsplit(arr,[2])
+```
+
+Matrisleri yatay olarak bölmek istersek de `hsplit` fonksiyonunu kullanabiliriz.
+```
+arr = np.arange(0,16,1).reshape([4,4])
+
+print(np.hsplit(arr,[2]))
+
+>>> [array([[ 0,  1],
+       [ 4,  5],
+       [ 8,  9],
+       [12, 13]]), array([[ 2,  3],
+       [ 6,  7],
+       [10, 11],
+       [14, 15]])]
+
+sag,sol = np.hsplit(arr,[2])
+```
+
+## Sıralama (sort)
+Tek boyutlu bir arrayi (vektör) sıralamak istersek `sort` fonksiyonunu kullanabiliriz.
+```
+arr = np.array([3,1,2,6,74,6,8,9,12])
+
+print(np.sort(arr))
+
+>>> [ 1  2  3  6  6  8  9 12 74]
+```
+
+Matrisleri sıralamak için ise yine `sort` fonksiyonunu kullanıyoruz. Fakat bu sefer `axis` parametresi ile beraber kullanıyoruz. Bİldiğimiz gibi `axis = 0` satırları ifade ederken `axis = 1` sütunları ifade etmektedir.
+```
+arr = np.random.normal(20,5,(3,3))
+
+print(np.sort(arr,axis=0))
+```
 # Pandas
 NumPy'ın özelliklerini kullanarak NumPy'dan daha gelişmiş işlemleri yapabilmemize olanak sağlayacaktır.
