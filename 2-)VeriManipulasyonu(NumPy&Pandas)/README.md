@@ -14,6 +14,7 @@
   - [Array Birleştirme (concatenate)](#array-birleştirme-concatenate)
   - [Array Ayırma (split)](#array-ayırma-split)
   - [Sıralama (sort)](#sıralama-sort)
+  - [Array Alt Kümeleme İşlemleri (slice)](#array-alt-kümeleme-i̇şlemleri-slice)
 - [Pandas](#pandas)
 
 # Veri Manipülasyonu (NumPy & Pandas)
@@ -316,5 +317,43 @@ arr = np.random.normal(20,5,(3,3))
 
 print(np.sort(arr,axis=0))
 ```
+
+## Array Alt Kümeleme İşlemleri (slice)
+Vektörlerde slice işlemi yapmak istersek temel komut dizilimi şu şekildedir: `array[x:y:z]` <br> Slice işlemlerinde x-y-z opsiyoneldir.
+- x = kaçıncı indexten başlayacağı
+- y = kaçıncı indexe kadar alacağı
+- z = kaçar kaçar gideceği
+```
+# Vektör
+
+arr = np.random.randint(0,10,10)
+
+print(arr[0:3]) # 0. index ile 3. index arasını al
+
+print(arr[:3]) # 0. index ile 3. index arasını al
+
+print(arr[3:]) # 3. indexten sonrasını al
+
+print(arr[1::2]) # 1. indexten son indexe kadar git 2'er 2'er atla
+
+print(arr[-1]) # son indexi verir
+```
+Matrisler (çok boyutlu arrayler) üzerinde slice işlemleri yapmak için temel dizilim şu şekildedir: `arr[x:y,z:m]` <br> `y` ve `m` opsiyoneldir.
+- x = satırlar kaçıncı indexten başlasın
+- y = satırlar kaçıncı indexe kadar alınsın
+- z = sütunlar kaçıncı indexten başlasın
+- m = sütunlar kaçıncı indexe kadar alınsın
+```
+nd = np.random.randint(0,10,(5,5))
+
+print(nd[:,0]) # bütün satırları seç ve sadece 0. sütunları al
+
+print(nd[0,:]) # 0. satır ve tüm sütunlar
+
+print(nd[0:2,0:3]) # 0 ile 2'e kadar satırlar, 0 ile 3 arası sütunlar
+
+print(nd[0:,0:2]) # bütün satırlar, 0 ile 2. sütunlar arası
+```
+
 # Pandas
 NumPy'ın özelliklerini kullanarak NumPy'dan daha gelişmiş işlemleri yapabilmemize olanak sağlayacaktır.
