@@ -95,7 +95,7 @@ Aritmetik ortalama ve medyan birbirine ne kadar yakınsa dağılım o kadar düz
 ![medyan](./assets/3.jpg)
 
 ### Mod (Mode)
-Bir değiken'de (seri) **en çok tekrar eden değer**dir.
+Bir değişken'de (seri) **en çok tekrar eden değer**dir.
 
 ![mod](./assets/4.jpeg)
 
