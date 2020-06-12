@@ -31,4 +31,4 @@ print(nd[0,:]) # 0. satır ve tüm sütunlar
 
 print(nd[0:2,0:3]) # 0 ile 2'e kadar satırlar, 0 ile 3 arası sütunlar
 
-print(nd[0:,0:2])
+print(nd[0:,0:2]) # bütün satırlar, 0 ile 2. sütunlar arası
