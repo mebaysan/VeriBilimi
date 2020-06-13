@@ -1,4 +1,5 @@
 - [Giriş](#giriş)
+  - [Kaynaklar](#kaynaklar)
 - [Bilgi Nedir?](#bilgi-nedir)
 - [Bilgi Piramidi Nedir?](#bilgi-piramidi-nedir)
 - [Veri Bilimi ve Veri Bilimci Nedir?](#veri-bilimi-ve-veri-bilimci-nedir)
@@ -29,6 +30,7 @@
 </div>
 
 Bu repoyu **Veri Bilimi** konu başlığı altında **Yoldaki Notlar**'ımı paylaşabilmek için hazırlamaya çalışıyorum. <br>
+## Kaynaklar
 Okuduğum, izlediğim, öğrendiğim kaynaklar:
 * [Yeni Başlayanlar İçin Veri Bilimine Giriş (Online Kurs)](https://www.udemy.com/course/yeni-baslayanlar-icin-veri-bilimine-giris/) - Data Forest TR
 * [Veri Bilimi Ve Yapay Zekaya Giriş (Online Kurs)](https://www.udemy.com/course/veri-bilimi-ve-yapay-zekaya-giris/) - Vahit Keskin
