@@ -35,6 +35,7 @@ Okuduğum, izlediğim, öğrendiğim kaynaklar:
 * [Python A-Z: Veri Bilimi ve Machine Learning (Online Kurs)](https://www.udemy.com/course/python-egitimi/) - Vahit Keskin & [Veri Bilimi Okulu](https://www.veribilimiokulu.com/)
 * [Bilgi ve Bilginin Yönetimi (Kitap)](http://www.papatya.gen.tr/bilgiVeBilgininYonetimi.htm) - Doç. Dr. Sevinç Gülseçen (Editör)
 * [Bilgi Yönetimi (Kitap)](http://www.papatya.gen.tr/bilgi_yonetimi_buyuk_veri_inovasyon.htm) - Prof. Dr. Sevinç Gülseçen (Editör)
+* [Stanford Üniversitesi Makine Öğrenmesi El Kitabı (PDF)](https://stanford.edu/~shervine/l/tr/teaching/cs-229/)
 
 # Bilgi Nedir?
 Felsefe disiplininde, bilgi teorisinin odağında ünlü filozof Plato'nun bilginin doğasıyla ilgili düşünceleri yer almaktadır. Ona göre, bilginin hem gerekçelendirilmiş hem doğru hem de inanılır olma kriterlerini karşılaması gerekmektedir; onun ünlü tanımıyla bilgi, **gerekçelendirilmiş doğru inançtır** ("justified true belief")(Musgrave,1993).
