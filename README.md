@@ -35,6 +35,7 @@ Okuduğum, izlediğim, öğrendiğim kaynaklar:
 * [Python A-Z: Veri Bilimi ve Machine Learning (Online Kurs)](https://www.udemy.com/course/python-egitimi/) - Vahit Keskin & [Veri Bilimi Okulu](https://www.veribilimiokulu.com/)
 * [Bilgi ve Bilginin Yönetimi (Kitap)](http://www.papatya.gen.tr/bilgiVeBilgininYonetimi.htm) - Doç. Dr. Sevinç Gülseçen (Editör)
 * [Bilgi Yönetimi (Kitap)](http://www.papatya.gen.tr/bilgi_yonetimi_buyuk_veri_inovasyon.htm) - Prof. Dr. Sevinç Gülseçen (Editör)
+* [Olasılık ve İstatistik (Kitap)](https://www.amazon.com.tr/Olas%C4%B1l%C4%B1k-ve-%C4%B0statistik-Fikri-Akdeniz/dp/6052396415) - Prof. Dr. Fikri Akdeniz
 * [Stanford Üniversitesi Makine Öğrenmesi El Kitabı (PDF)](https://stanford.edu/~shervine/l/tr/teaching/cs-229/)
 
 # Bilgi Nedir?
