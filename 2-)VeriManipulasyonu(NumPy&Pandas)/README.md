@@ -15,6 +15,14 @@
   - [Array Ayırma (split)](#array-ayırma-split)
   - [Sıralama (sort)](#sıralama-sort)
   - [Array Alt Kümeleme İşlemleri (slice)](#array-alt-kümeleme-i̇şlemleri-slice)
+  - [Alt Kümeler Üzerinde İşlem Yapmak (copy)](#alt-kümeler-üzerinde-i̇şlem-yapmak-copy)
+  - [Fancy Index ile Elemanlara Erişmek](#fancy-index-ile-elemanlara-erişmek)
+    - [Basit Index ve Fancy Index Kullanımı](#basit-index-ve-fancy-index-kullanımı)
+    - [Slice ve Fancy Index Kullanımı](#slice-ve-fancy-index-kullanımı)
+  - [Koşullu Eleman İşlemleri](#koşullu-eleman-i̇şlemleri)
+  - [NumPy Array Üzerinde Matematiksel İşlemler](#numpy-array-üzerinde-matematiksel-i̇şlemler)
+    - [ufunc Kavramı](#ufunc-kavramı)
+  - [NumPy ile 2 Bilinmeyenli Denklem Çözmek](#numpy-ile-2-bilinmeyenli-denklem-çözmek)
 - [Pandas](#pandas)
 
 # Veri Manipülasyonu (NumPy & Pandas)
@@ -354,6 +362,189 @@ print(nd[0:2,0:3]) # 0 ile 2'e kadar satırlar, 0 ile 3 arası sütunlar
 
 print(nd[0:,0:2]) # bütün satırlar, 0 ile 2. sütunlar arası
 ```
+## Alt Kümeler Üzerinde İşlem Yapmak (copy)
+Bazı durumlarda alt kümelerimiz üzerinde işlem yapmak isteriz. Bu durumlarda direk ana kümemizden seçtiğimiz alt küme üzerinde değişiklik yaparsak yaptığımız değişiklik ana kümemize de uygulanmış olur <br>
+Aşağıdaki örnek kodda `alt_nd` alt kümesinin 0,0 ve 1,1 değerlerini değiştirdik. Fakat bu asıl kümemiz olan `nd` ana kümesinin de 0,0 ve 1,1 değerlerinin değişmesine sebep oldu.
+```
+nd = np.random.randint(0,10,(5,5))
 
+alt_nd = nd[0:3,0:2]
+
+alt_nd[0,0] = 1234  
+
+alt_nd[1,1] = 56789
+
+print(nd)
+>>> [[ 1234     8     8     4     8]
+ [    3 56789     4     4     4]
+ [    3     4     6     2     7]
+ [    7     4     8     7     9]
+ [    4     9     9     3     4]]
+```
+
+Eğer yukarıdaki gibi bir sonuçla (belki problem) karşılaşmak istemiyorsak `copy` fonksiyonunu kullanmalıyız. Bu sayede alt_kume değişkenimize ana kümemizden aldığımız alt kümenin bir **kopyası** aktarılacak ve bu sayede yaptığımız değişiklikler ana kümemizde uygulanmamış olacak. Yani denemelerimiz için ana kümemizi bozmamış olacağız. <br>
+Aşağıdaki örnek kodda `nd` değişkenimizin 0:3 ve 0:2 matrisinin **kopyasından** bir `alt_kume` alt kümesi oluşturuyoruz ve bunu değişkene atıyoruz. Sonrasında yaptığımız değişiklikler asıl kümemiz olan `nd` ana kümesinde uygulanmayacaktır.
+```
+nd = np.random.randint(0,10,(5,5))
+
+alt_kume = nd[0:3,0:2].copy()
+
+alt_kume[0,0] = 9999
+
+print(nd)
+
+>>> [[1 0 8 5 1]
+ [8 0 2 2 2]
+ [9 0 8 7 4]
+ [4 0 2 8 0]
+ [3 7 0 1 1]]
+```
+
+## Fancy Index ile Elemanlara Erişmek
+Fancy kelime anlamı olarak fantastik anlamına gelmektedir. NumPy Array'lerinde ve Pandas DataFrame'lerinde daha rahat eleman seçmemize olanak sağlar.
+
+Örnek olarak tek boyutlu bir arrayimiz var (vektör) ve bundan 1. 3. ve 5. indexteki değerleri çekmek istiyoruz. Burada yaptığımız işleme `fancy index` denmektedir.
+```
+nd = np.arange(0,30,3) 
+
+istenilen_indexler = [1,3,5]
+
+print(nd[istenilen_indexler])
+```
+
+Bu işlemi matrisler üzerinde gerçekleştirmek istersek ise erişmek istediğimiz satır ve sütunları kullanarak gerçekleştirebiliriz.
+```
+nd = np.arange(0,9).reshape((3,3)) # tek boyutlu arrayi, boyutlu array haline getirdik
+
+istenilen_satir = np.array([0,1])
+
+istenilen_sutun = np.array([1,2])
+
+print(nd[istenilen_satir,istenilen_sutun])
+
+>>> [1 5]
+```
+### Basit Index ve Fancy Index Kullanımı
+Fancy Index'ler sayesinde çok rahat bir şekilde elemanlara erişebildiğimizi söylemiştik. <br> Aşağıdaki örnekte basit index ile fancy index birarada kullanılmıştır. Basit index ile 0. satır alınmış ve fancy index ile 1 ile 2. sütunlar alınmıştır.
+```
+nd = np.arange(0,9).reshape((3,3))
+
+print(nd[0,[1,2]]) 
+
+>>> [1 2]
+```
+### Slice ve Fancy Index Kullanımı
+Aşağıdaki örnekte slice işlemi ve fancy index bir arada kullanılmıştır. 1. satırdan sonraki satırlar slice ile 1. ve 2. satırlar fancy index ile alınmıştır.
+```
+nd = np.arange(0,9).reshape((3,3))
+
+print(nd[1:,[1,2]])
+
+>>> [[4 5]
+ [7 8]]
+```
+
+## Koşullu Eleman İşlemleri
+Bir array içerisindeki elemanların belirli bir koşula uyup uymadığını öğrenebiliriz. <br> Aşağıdaki örnekte nd array'i içerisindeki her bir elemanın `< 4` koşuluna uyup uymadığı sorgulanmıştır.
+```
+nd = np.arange(0,10)
+
+print( nd < 4)
+
+>>> [ True  True  True  True False False False False False False]
+``` 
+Peki bunları tekrar bir değişkene atamak istersek ne yapacağız?
+```
+nd = np.arange(0,10)
+
+dortten_kucukler = nd[nd < 4]
+
+print(dortten_kucukler)
+
+>>> [0 1 2 3]
+```
+Örneklerde kullanılan `<` işaretini Python'da bildiğimiz her karşılaştırma operatörü için kullanabiliriz
+- `<` - Küçükse
+- `>` - Büyükse
+- `<=` - Küçük veya eşitse
+- `>=` - Büyük veya eşitse
+- `==` - Eşitse
+- `!=` - Eşit değilse
+
+## NumPy Array Üzerinde Matematiksel İşlemler
+Bir arrayimiz var ve bütün elemanlarının 2 ile çarpılmasını istiyoruz. Bu durumda ne yapacağız?<br>
+Aşağıdaki örnekte `nd` arrayinin tüm elemanları 2 ile çarpılmıştır. Tabii bunu diğer matematiksel operatörler ile de kullanmak mümkündür ( /, * vd.)
+```
+nd = np.arange(0,10)
+
+print(nd*2)
+
+>>> [ 0  2  4  6  8 10 12 14 16 18]
+```
+Aşağıdaki örnekte tüm elemanlardan `1` çıkarılmıştır
+```
+nd = np.arange(0,10)
+
+print(nd - 1)
+
+>>> [-1  0  1  2  3  4  5  6  7  8]
+```
+### ufunc Kavramı
+Aslında bir üst başlıktaki matematiksel işlem örneklerini yaptığımızda da numpy arrayleri içerisinde otomatik olarak ufunc fonksiyonları çalışmaktadır. Örnek olarak `nd - 1` kodunu çalıştırdığımızda arkada bir adet `ufunc` çalışmaktadır.
+```
+nd = np.arange(0,10)
+
+print(np.subtract(nd,1))
+
+>>> [-1  0  1  2  3  4  5  6  7  8]
+```
+Bazı ufunc'lar:
+- `np.subtract(nd,1)` -> nd arrayindeki her bir elemandan 1 çıkarır
+- `np.add(nd,1)` -> nd arrayindeki her bir elemana 1 ekler
+- `np.multiply(nd,2)` -> nd arrayindeki her bir elemanı 2 ile çarpar
+- `np.divide(nd,2)` -> nd arrayindeki her bir elemanı 2 ile böler
+- `np.power(nd,2)` -> nd arrayindeki her bir elemanın 2 üssünü alır
+- `np.mod(nd,2)` -> nd arrayindeki her bir elemanın 2'e bölümünden kalanları verir
+- `np.absolute(nd)` -> nd arrayindeki her bir elemanın mutlak değerini verir
+- `np.log(nd)` -> nd arrayindeki her bir elemanın logaritmasını alır
+
+## NumPy ile 2 Bilinmeyenli Denklem Çözmek
+NumPy içerisindeki alt paket olan `linalg` ile lineer cebir işlemlerini gerçekleştirebiliriz.<br>
+Denklemimiz şu şekildedir:
+```
+5 * x0 + x1 = 12
+
+x0 + 3 * x1 = 10
+```
+Öncelike `a` değişkenine denklemdeki bilinmeyenlerin katsayılarını tanımlıyoruz. `5 tane x0 + 1 tane x1` ve `1 tane x0 ve 3 tane x1` anlamına gelmektedir.
+```
+a = np.array([[5,1],[1,3]])
+```
+Daha sonra `b` değişkenine katsayılara karşılık oluşmuş olan eşitliğin diğer tarafındaki ifadeleri tanımlıyoruz.
+```
+b = np.array([12,10])
+```
+Ve `cevap` değişkenimize NumPy'ın alt pakedi olan `linalg` paketinin `solve` fonksiyonu ile çözdüğümüz cevabı atıyoruz. 1. argüman ve 2. argüman arasındaki ilişki sonucunda oluşacak olan katsayıları hesapla dedik ve x1 ile x2 değerlerini bulmuş olduk.
+```
+cevap = np.linalg.solve(a,b)
+
+print(cevap)
+
+>>> [1.85714286 2.71428571]
+```
+Kodun son hali:
+```
+import numpy as np
+
+a = np.array([[5,1],[1,3]])
+
+b = np.array([12,10])
+
+cevap = np.linalg.solve(a,b)
+
+print(cevap)
+
+>>> [1.85714286 2.71428571]
+```
 # Pandas
 NumPy'ın özelliklerini kullanarak NumPy'dan daha gelişmiş işlemleri yapabilmemize olanak sağlayacaktır.
