@@ -547,4 +547,14 @@ print(cevap)
 >>> [1.85714286 2.71428571]
 ```
 # Pandas
-NumPy'ın özelliklerini kullanarak NumPy'dan daha gelişmiş işlemleri yapabilmemize olanak sağlayacaktır.
+NumPy'ın özelliklerini kullanarak NumPy'dan daha gelişmiş işlemleri yapabilmemize olanak sağlayacaktır.<br>
+ - Panel Data'nın kısaltılmışı olarak ortaya çıkmıştır.
+ - Veri manipülasyonu ve veri analizi için yazılmıştır.
+ - Açık kaynak kodludur.
+ - NumPy'a alternatif değildir. Onun özelliklerini kullanan ve bunları genişleten bir kütüphanedir.
+ - Pandas'ın kendisine ait veri tipi vardır. Pandas DataFrame olarak geçmektedir.
+ - NumPy'daki **Fixed Type zorunluluğu Pandas'ta yoktur.** Bu sayede bir çok farklı veri tipini okuma ve yazma imkanı sağlar.
+ - Ekonometrik ve finansal çalışmalar için doğmuştur.
+ - Temeli 2008 yılında atılmıştır.
+ - R DataFrame yapısını Python dünyasına taşımış ve DataFrame'ler üzerinde hızlı ve etkili çalışabilme imkanı sağlamıştır.
+
