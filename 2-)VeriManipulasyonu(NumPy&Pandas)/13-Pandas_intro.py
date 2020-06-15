@@ -49,5 +49,5 @@ print(df['reg':'log']) # slice
 # iki seriyi birleştirerek yeni bir seri oluşturmak
 seri1 = pd.Series([1,2,3],index=['x1','y1','z1'])
 seri2 = pd.Series([4,5,6],index=['x2','y2','z2'])
-df = pd.concat([seri1,seri2]) # unutmamalıyız yalnızca 2 seri tipini birleştirir
+df = pd.concat([seri1,seri2]) # unutmamalıyız gönderilen parametrelerin veri tipi pandas serisi olmalıdır
 print(df)

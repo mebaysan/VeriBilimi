@@ -24,7 +24,7 @@
     - [ufunc Kavramı](#ufunc-kavramı)
   - [NumPy ile 2 Bilinmeyenli Denklem Çözmek](#numpy-ile-2-bilinmeyenli-denklem-çözmek)
 - [Pandas](#pandas)
-  - [Pandas DataFrame Oluşturmak](#pandas-dataframe-oluşturmak)
+  - [Pandas Seri Oluşturmak](#pandas-seri-oluşturmak)
     - [Seri Oluşturmak](#seri-oluşturmak)
     - [dtype](#dtype)
     - [axes](#axes)
@@ -35,6 +35,7 @@
     - [slice](#slice)
     - [sözlük üzerinden pandas serisi oluşturmak](#sözlük-üzerinden-pandas-serisi-oluşturmak)
     - [seri birleştirmek (concat)](#seri-birleştirmek-concat)
+  - [Eleman İşlemleri (Seriler)](#eleman-i̇şlemleri-seriler)
 
 # Veri Manipülasyonu (NumPy & Pandas)
 # NumPy
@@ -570,7 +571,7 @@ NumPy'ın özelliklerini kullanarak NumPy'dan daha gelişmiş işlemleri yapabil
  - Temeli 2008 yılında atılmıştır.
  - R DataFrame yapısını Python dünyasına taşımış ve DataFrame'ler üzerinde hızlı ve etkili çalışabilme imkanı sağlamıştır.
 
-## Pandas DataFrame Oluşturmak
+## Pandas Seri Oluşturmak
 Pandas ile işlem çalışırken her zaman önce 
 `import pandas` diyerek Pandas kütüphanesini çalıştığımız 
 dosyaya dahil etmeliyiz. Eğer ki Pandas kütüphanesi yüklü
@@ -582,7 +583,7 @@ bilgisayarımıza (veya sanal ortamımıza) yükleyebiliriz.
 sayesinde Pandas kütüphanesine artık `pd` şeklinde 
 ulaşabilir ve kullanabiliriz.
 
-Pandas DataFrame'lerinin kendine özel bir yapısı vardır. Veri yapısının yanında bir de index numaralarını tutmaktadır.
+Pandas Serilerinin kendine özel bir yapısı vardır. Veri yapısının yanında bir de index numaralarını tutmaktadır.
 ### Seri Oluşturmak
 Bir Pandas serisi oluşturmak için `pd.Series` fonksiyonu kullanılır.
 ```
@@ -727,3 +728,41 @@ y2    5
 z2    6
 dtype: int64
 ```
+
+## Eleman İşlemleri (Seriler)
+Oluşturduğumuz pandas serileri üzerinde işlemler gerçekleştirebilmekteyiz. 
+- `index` ile serinin index bilgilerine erişebilmekteyiz
+- `keys` ile serinin key değerlerine ulaşabiliriz
+- `list(seri.items())`  ile seriyi key-value olarak **tuple** olacak şekilde bir listeye atar
+- `values` ile sadece serinin değerlerini alabiliriz
+- `'x' in seri` kullanımı ile 'x' değerinin seride olup olmadığını kontrol edebiliriz
+- `seri[[1,4]]` (fancy index) ile index'i 1 ve 4 olan değerleri alırız
+- `seri[1:4]` ile 1 ile 4. index arasındaki değerleri alırız
+
+```
+import pandas as pd
+import numpy as np
+
+nd = np.array([1,2,34,45,677,75])
+seri = pd.Series(nd)
+
+print(seri.index) # index bilgilerine ulaşıyoruz
+
+print(seri.keys) # key değerlerine ulaşırız
+
+print(list(seri.items())) # key-value şeklinde tuple olarak bir listeye alırız
+
+print(seri.values) # serinin sadece değerlerine erişiriz
+
+# elemanları sorgulamak
+
+print("x" in seri) # "x" değeri seri'nin içinde mi sorusunu sorduk
+
+# fancy ile eleman seçmek
+
+print(seri[[1,4]]) # index'i 1 ile 4 olan verileri getirdik
+
+print(seri[1:4]) # index'i 1'den 4'e kadar olan verileri getir
+
+```
+
