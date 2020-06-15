@@ -36,6 +36,7 @@
     - [sözlük üzerinden pandas serisi oluşturmak](#sözlük-üzerinden-pandas-serisi-oluşturmak)
     - [seri birleştirmek (concat)](#seri-birleştirmek-concat)
   - [Eleman İşlemleri (Seriler)](#eleman-i̇şlemleri-seriler)
+  - [Pandas DataFrame Oluşturmak](#pandas-dataframe-oluşturmak)
 
 # Veri Manipülasyonu (NumPy & Pandas)
 # NumPy
@@ -764,5 +765,65 @@ print(seri[[1,4]]) # index'i 1 ile 4 olan verileri getirdik
 
 print(seri[1:4]) # index'i 1'den 4'e kadar olan verileri getir
 
+```
+
+## Pandas DataFrame Oluşturmak
+Pandas DataFrame, yapısal bir veri tipidir. Excel veri yapısına benzerdir. **Pandas DataFrame Fixed Type değildir.** 
+
+`DataFrame` fonksiyonu ile Pandas DataFrame oluşturulabilmektedir. İstersek `columns` argümanını da set ederek **değişken** isimlerini belirleyebiliriz.
+```
+df = pd.DataFrame([1,2,45,67,879,90],columns=["degisken_adi"])
+
+print(df)
+
+>>>    degisken_adi
+0             1
+1             2
+2            45
+3            67
+4           879
+5            90
+```
+
+Aşağıdaki örnekte NumPy arrayi oluşturulmuş ve yeniden boyutlandırılmıştır (3x3). Oluşturulan bu ndarray üzerinden bir adet Pandas DataFrame'i oluşturulmuş ve değişken (kolon) isimleri set edilmiştir. Ekrana çıktı alındıktan sonra sırasıyla değişken (kolon) isimleri tekrar değiştirilmiş ve ekrana yazılmıştır.
+```
+nd = np.arange(1,10).reshape((3,3))
+
+df = pd.DataFrame(nd,columns=['var1','var2','var3'])
+
+print(df)
+>>>    var1  var2  var3
+0     1     2     3
+1     4     5     6
+2     7     8     9
+
+df.columns = ('deg1','deg2','deg3') # değişken isimleri değiştirildi
+
+print(df)
+>>>    deg1  deg2  deg3
+0     1     2     3
+1     4     5     6
+2     7     8     9
+```
+
+Oluşturduğumuz Pandas DataFrame'lerine dair bilgilere aşağıdaki gibi erişebiliriz.
+```
+nd = np.arange(1,10).reshape((3,3))
+
+df = pd.DataFrame(nd,columns=['var1','var2','var3'])
+
+print(df.axes) # satır ve sütun bilgilerini verir
+
+print(df.ndim) # boyut sayısını verir
+
+print(df.shape) # kaça kaçlık
+
+print(df.size) # kaç elemanlı
+
+print(df.values) # sadece değerleri verir ve ndarray nesnesine çevirir
+
+print(df.head(2)) # baştan 2 veri
+
+print(df.tail(2)) # sondan 2 veri
 ```
 
