@@ -24,6 +24,17 @@
     - [ufunc Kavramı](#ufunc-kavramı)
   - [NumPy ile 2 Bilinmeyenli Denklem Çözmek](#numpy-ile-2-bilinmeyenli-denklem-çözmek)
 - [Pandas](#pandas)
+  - [Pandas DataFrame Oluşturmak](#pandas-dataframe-oluşturmak)
+    - [Seri Oluşturmak](#seri-oluşturmak)
+    - [dtype](#dtype)
+    - [axes](#axes)
+    - [ndim - size - values](#ndim---size---values)
+    - [head(n) - tail(n)](#headn---tailn)
+    - [index isimlendirme](#index-isimlendirme)
+    - [index üzerinden değerlere ulaşmak](#index-üzerinden-değerlere-ulaşmak)
+    - [slice](#slice)
+    - [sözlük üzerinden pandas serisi oluşturmak](#sözlük-üzerinden-pandas-serisi-oluşturmak)
+    - [seri birleştirmek (concat)](#seri-birleştirmek-concat)
 
 # Veri Manipülasyonu (NumPy & Pandas)
 # NumPy
@@ -553,8 +564,166 @@ NumPy'ın özelliklerini kullanarak NumPy'dan daha gelişmiş işlemleri yapabil
  - Açık kaynak kodludur.
  - NumPy'a alternatif değildir. Onun özelliklerini kullanan ve bunları genişleten bir kütüphanedir.
  - Pandas'ın kendisine ait veri tipi vardır. Pandas DataFrame olarak geçmektedir.
+ - Pandas DataFrame'lerini NumPy arraylerinden bildiğimiz tek boyutlu arrayler (vektör) olarak düşünebiliriz
  - NumPy'daki **Fixed Type zorunluluğu Pandas'ta yoktur.** Bu sayede bir çok farklı veri tipini okuma ve yazma imkanı sağlar.
  - Ekonometrik ve finansal çalışmalar için doğmuştur.
  - Temeli 2008 yılında atılmıştır.
  - R DataFrame yapısını Python dünyasına taşımış ve DataFrame'ler üzerinde hızlı ve etkili çalışabilme imkanı sağlamıştır.
 
+## Pandas DataFrame Oluşturmak
+Pandas ile işlem çalışırken her zaman önce 
+`import pandas` diyerek Pandas kütüphanesini çalıştığımız 
+dosyaya dahil etmeliyiz. Eğer ki Pandas kütüphanesi yüklü
+değilse `pip install pandas` diyerek kütüphaneyi 
+bilgisayarımıza (veya sanal ortamımıza) yükleyebiliriz.
+
+
+`import pandas as pd` -> Bu kod parçacığı 
+sayesinde Pandas kütüphanesine artık `pd` şeklinde 
+ulaşabilir ve kullanabiliriz.
+
+Pandas DataFrame'lerinin kendine özel bir yapısı vardır. Veri yapısının yanında bir de index numaralarını tutmaktadır.
+### Seri Oluşturmak
+Bir Pandas serisi oluşturmak için `pd.Series` fonksiyonu kullanılır.
+```
+import pandas as pd
+
+df = pd.Series([11,22,33,44,55,66,77,88,99])
+
+print(df)
+>>> 0    11
+1    22
+2    33
+3    44
+4    55
+5    66
+6    77
+7    88
+8    99
+```
+### dtype
+Pandas serilerinin sakladığı verilerin tipini öğrenmek için ise `dtype` fonksiyonunu kullanabiliriz
+```
+df = pd.Series([11,22,33,44,55,66,77,88,99])
+
+print(df.dtype)
+
+>>> int64
+```
+### axes
+Pandas serilerinin index bilgilerine erişebiliriz<br>
+Aşağıdaki örnek için çıktımız bize indexlerin 0'dan 9'a KADAR 1'er 1'er gittiğini söylemektedir.
+```
+df = pd.Series([11,22,33,44,55,66,77,88,99])
+
+print(df.axes)
+
+>>> [RangeIndex(start=0, stop=9, step=1)]
+```
+### ndim - size - values
+Pandas Serisinin eleman sayısını öğrenmek istersek `size` ve boyut sayısını öğrenmek istersek `ndim` fieldlarını kullanmamız gerekmektedir. Aynı zamanda serilerin `values` fieldını kullanarak sadece değerlerine erişebiliriz (index numaraları hariç). 
+```
+df = pd.Series([11,22,33,44,55,66,77,88,99])
+
+print(df.size)
+>>> 9
+
+print(df.ndim)
+>>> 1
+
+print(df.values)
+>>> [11 22 33 44 55 66 77 88 99]
+```
+### head(n) - tail(n)
+Serilerin baştan `n` kadar (`head(n)`) ve sondan `n` kadar (`tail(n)`) değerlerini görüntüleyebiliriz.<br> Aşağıdaki örneklerde baştan ve sondan 5'er (n) veri görüntülenmiştir.
+```
+df = pd.Series([11,22,33,44,55,66,77,88,99])
+
+print(df.head(5)) # serinin ilk 5 değerini getirir
+>>> 0    11
+1    22
+2    33
+3    44
+4    55
+dtype: int64
+
+print(df.tail(5)) # serinin son 5 elemanını getirir
+>>> 4    55
+5    66
+6    77
+7    88
+8    99
+dtype: int64
+```
+
+### index isimlendirme
+İstersek oluşturduğumuz serilerin index'lerini isimlendirebiliriz.
+```
+df = pd.Series([12,23,34,45,56],index=['x','y','z','w','q'])
+
+print(df)
+
+>>> x    12
+y    23
+z    34
+w    45
+q    56
+dtype: int64
+```
+### index üzerinden değerlere ulaşmak
+Pure Python'daki sözlük yapısında olduğu gibi Pandas Serilerinde de index'ler üzerinden karşılık geldiği değerlere erişebiliriz. <br>
+Aşağıdaki örnekte bir Pandas Serisi oluşturulmuş ve index'leri isimlendirilmiştir. Ardından `x` indexindeki elemana erişilmiştir.
+```
+df = pd.Series([12,23,34,45,56],index=['x','y','z','w','q']) 
+
+print(df['x'])
+
+>>> 12
+```
+
+### slice
+NumPy'da olduğu gibi Pandas'ta da slice işlemlerini gerçekleştirebiliriz. <br>
+Aşağıdaki örnekte `x` indexinden `z` indexine kadar slice işlemi gerçekleştirilmiştir.
+```
+df = pd.Series([12,23,34,45,56],index=['x','y','z','w','q'])
+
+print(df['x':'z']) # x index'inden z index'ine kadar slice
+
+>>> x    12
+y    23
+z    34
+dtype: int64
+```
+
+### sözlük üzerinden pandas serisi oluşturmak
+Sadece listeler üzerinden değil sçzlük veri tipi üzerinden de pandas serileri oluşturulabilir. Sözlüğün `key` değerleri oluşan pandas serisinin indexlenmesinde kullanılır.
+```
+df = pd.Series({'reg':10,'log':11,'cat':12})
+
+print(df)
+
+>>> reg    10
+log    11
+cat    12
+dtype: int64
+```
+
+### seri birleştirmek (concat)
+Serileri birleştirerek yeni seriler üretebiliriz. Bunun için `concat` fonksiyonu kullanılmaktadır. Önemli nokta şudur ki gönderilen her parametrenin veri tipi pandas serisi olmalıdır.
+```
+seri1 = pd.Series([1,2,3],index=['x1','y1','z1'])
+
+seri2 = pd.Series([4,5,6],index=['x2','y2','z2'])
+
+df = pd.concat([seri1,seri2])
+
+print(df)
+
+>>> x1    1
+y1    2
+z1    3
+x2    4
+y2    5
+z2    6
+dtype: int64
+```
