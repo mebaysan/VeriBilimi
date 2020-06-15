@@ -39,6 +39,7 @@ Okuduğum, izlediğim, öğrendiğim kaynaklar:
 * [Bilgi Yönetimi (Kitap)](http://www.papatya.gen.tr/bilgi_yonetimi_buyuk_veri_inovasyon.htm) - Prof. Dr. Sevinç Gülseçen (Editör)
 * [Olasılık ve İstatistik (Kitap)](https://www.amazon.com.tr/Olas%C4%B1l%C4%B1k-ve-%C4%B0statistik-Fikri-Akdeniz/dp/6052396415) - Prof. Dr. Fikri Akdeniz
 * [Stanford Üniversitesi Makine Öğrenmesi El Kitabı (PDF)](https://stanford.edu/~shervine/l/tr/teaching/cs-229/)
+* [Çıplak İstatistik (Kitap)](https://www.amazon.com.tr/%C3%87%C4%B1plak-%C4%B0statistik-art%C4%B1k-kolay-zevkli/dp/6058213258) - Charles Wheelan
 
 # Bilgi Nedir?
 Felsefe disiplininde, bilgi teorisinin odağında ünlü filozof Plato'nun bilginin doğasıyla ilgili düşünceleri yer almaktadır. Ona göre, bilginin hem gerekçelendirilmiş hem doğru hem de inanılır olma kriterlerini karşılaması gerekmektedir; onun ünlü tanımıyla bilgi, **gerekçelendirilmiş doğru inançtır** ("justified true belief")(Musgrave,1993).
