@@ -37,6 +37,15 @@
     - [seri birleştirmek (concat)](#seri-birleştirmek-concat)
   - [Eleman İşlemleri (Seriler)](#eleman-i̇şlemleri-seriler)
   - [Pandas DataFrame Oluşturmak](#pandas-dataframe-oluşturmak)
+  - [Eleman İşlemleri (DataFrame)](#eleman-i̇şlemleri-dataframe)
+    - [Sözlük (Dictionary) Üzerinden DataFrame Oluşturmak](#sözlük-dictionary-üzerinden-dataframe-oluşturmak)
+    - [Index İsimlendirme](#index-i̇simlendirme)
+    - [Gözlem Silmek](#gözlem-silmek)
+      - [Fancy ile Gözlem Silmek](#fancy-ile-gözlem-silmek)
+    - [Değişken Var mı?](#değişken-var-mı)
+    - [Değişken Eklemek](#değişken-eklemek)
+    - [Değişkenler Üzerinde Matematiksel İşlemler](#değişkenler-üzerinde-matematiksel-i̇şlemler)
+    - [Değişken Silmek](#değişken-silmek)
 
 # Veri Manipülasyonu (NumPy & Pandas)
 # NumPy
@@ -827,3 +836,121 @@ print(df.head(2)) # baştan 2 veri
 print(df.tail(2)) # sondan 2 veri
 ```
 
+## Eleman İşlemleri (DataFrame)
+
+### Sözlük (Dictionary) Üzerinden DataFrame Oluşturmak
+Bu başlık boyunca yaptığımız örnekler aşağıdaki 
+DataFrame üzerinden gerçekleştirilecektir.
+```
+import pandas as pd
+import numpy as np
+
+
+s1  = np.random.randint(0,10,5)
+s2  = np.random.randint(0,10,5)
+s3  = np.random.randint(0,10,5)
+
+sozluk = {'var1':s1,'var2':s2,'var3':s3}
+
+df = pd.DataFrame(sozluk)
+```
+
+### Index İsimlendirme
+Aşağıdaki örnekte, yukarıdaki başlıkta oluşturduğumuz df DataFrame'inin indexlerini yeniden isimlendiriyoruz. 5 adet argüman yollamamızın sebebi 5 adet gözlem değerine sahip olmamızdan kaynaklanmaktadır.
+```
+df.index = ['a','b','c','d','e']
+
+print(df)
+
+>>>    var1  var2  var3
+a     7     3     2
+b     8     6     0
+c     8     1     3
+d     4     6     5
+e     6     8     8
+```
+
+### Gözlem Silmek
+Aşağıdaki örnekte `a` gözlemi (a indexi) silinmiştir. `axis=0` kullanımı [yukarıdaki örneklerden](#array-birleştirme-concatenate) de bildiğimiz gibi satırları, `axis=1` ise sütunları ifade etmekteydi. `inplace` argümanının `True` olarak set edilmesi ise yapılan değişikliğin kalıcı olmasını sağlamaktadır. 
+```
+print(df)
+
+>>>    var1  var2  var3
+a     7     3     2
+b     8     6     0
+c     8     1     3
+d     4     6     5
+e     6     8     8
+
+df.drop('a',axis=0,inplace=True)
+
+print(df)
+
+>>>    var1  var2  var3
+b     8     6     0
+c     8     1     3
+d     4     6     5
+e     6     8     8
+```
+
+#### Fancy ile Gözlem Silmek
+Aşağıdaki örnekte yalnızca `b` ve `d` gözlemleri gelmiştir. Bunun sebebi fancy ile `c` ve `e` gözlemlerini bizim silmemizdir. Fakat `a` gözleminin gelmemesinin sebebi ise bu işlemi bir üst başlıkta `inplace=True` argümanıyla birlikte `a` gözlemini sildiğimiz aynı `df` DataFrame'i ile gerçekleştiriyor olmamızdır. Aşağıdaki örneklerde göreceğimiz üzere `c` ve `e` işlemlerine erişebileceğiz çünkü `inplace` argümanını göndermedik.
+```
+silinecekler = ['c','e']
+
+print(df.drop(silinecekler,axis=0))
+
+>>>    var1  var2  var3
+b     8     6     0
+d     4     6     5
+```
+
+### Değişken Var mı?
+Aşağıdaki örnekte `var1` değişkeninin `df` DataFrame'i içerisinde olup olmadığı sorgulanmıştır.
+```
+print('var1' in df)
+
+>>> True
+```
+
+### Değişken Eklemek
+Aşağıdaki örnekte `var4` adında bir değişken eklenmiştir. Bu yapı Pure Python'dan bildiğimiz `dictionary` veri tipine benzemektedir. `var4` değişkeni olsaydı aslında onun değerini set etmiş olacaktık fakat olmadığı için mevcut DataFrame'imize `var4` adında bir değişken eklemiş olduk.
+```
+df['var4'] = [1,2,3,4] 
+
+print(df)
+
+>>>    var1  var2  var3  var4
+b     8     6     0     1
+c     8     1     3     2
+d     4     6     5     3
+e     6     8     8     4
+```
+
+### Değişkenler Üzerinde Matematiksel İşlemler
+Aşağıdaki örnekte `var1` değişkeni ile `var2` değişkeninin bölümünden elde edilen sonuçlar `var4` değişkenine yazılmıştır.
+```
+df['var4'] = df['var1'] / df['var2'] 
+
+print(df)
+
+>>>    var1  var2  var3      var4
+b     8     6     0  1.333333
+c     8     1     3  8.000000
+d     4     6     5  0.666667
+e     6     8     8  0.750000
+``` 
+
+### Değişken Silmek
+Aşağıdaki örnekte `var4` değişkeni silinmiştir. `axis=1` argümanının verilmesi ise silinmek istenen değerin **sütun** bazında olmasıdır. Tekrar hatırlayalım; `axis=0` satırları, `axis=1` sütunları temsil etmektedir.
+```
+df.drop('var4',axis=1,inplace=True) 
+
+print(df)
+
+>>>    var1  var2  var3
+b     8     6     0
+c     8     1     3
+d     4     6     5
+e     6     8     8
+```
