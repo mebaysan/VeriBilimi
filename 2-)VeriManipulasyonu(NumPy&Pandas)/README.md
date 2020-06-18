@@ -46,6 +46,7 @@
     - [Değişken Eklemek](#değişken-eklemek)
     - [Değişkenler Üzerinde Matematiksel İşlemler](#değişkenler-üzerinde-matematiksel-i̇şlemler)
     - [Değişken Silmek](#değişken-silmek)
+  - [Gözlem ve Değişken Seçimi: loc & iloc](#gözlem-ve-değişken-seçimi-loc--iloc)
 
 # Veri Manipülasyonu (NumPy & Pandas)
 # NumPy
@@ -954,3 +955,82 @@ c     8     1     3
 d     4     6     5
 e     6     8     8
 ```
+
+
+## Gözlem ve Değişken Seçimi: loc & iloc
+Gözlem ve değişken seçimi için kullanacağımız 2 türlü yapı vardır. `loc` ve `iloc` yapıları. Değişken seçimi için zorunlu kurallarımız varsa `loc` yapısını kullanmalıyız. Fakat zorunlu kurallarımız yoksa `iloc` yapısını kullanabiliriz.<br>
+Öncelikle bu bölüm için üzerinde işlem yapacağımız DataFrame'i tanımlıyoruz.
+```
+import pandas as pd
+import numpy as np
+
+nd = np.random.randint(1,30,(10,3))
+df = pd.DataFrame(nd,columns=['var1','var2','var3'])
+
+print(df)
+>>>    var1  var2  var3
+0     2    20     4
+1     6    17    24
+2     7     2     3
+3     7    25    14
+4    10     4    20
+5    16    19     3
+6     1    22     3
+7     9    10    17
+8    13    25     1
+9    26    17    19
+```
+
+`loc` yapısına bir örnek gösterelim. Bu örnekte 0. index ile 3. index ve arasındakiler seçilmiştir. 3. index **DAHİLDİR**.
+```
+print(df.loc[0:3])
+>>>    var1  var2  var3
+0     2    20     4
+1     6    17    24
+2     7     2     3
+3     7    25    14
+```
+
+`iloc` yapısının kullanıldığı bu örnek ise alışık olduğumuz indexleme mantığını kullanır. Aşağıdaki örnekte 0. indexten 3. indexe **KADAR** gözlemler seçilmiştir.
+```
+print(df.iloc[0:3])
+>>>    var1  var2  var3
+0     2    20     4
+1     6    17    24
+2     7     2     3
+```
+
+Bu örnekte ise en baştan 3. indexe kadar (satır - gözlem) ve en baştan 2. sütuna kadar (değişken) olan veriler seçilmiştir.
+```
+print(df.iloc[:3,:2])
+>>>    var1  var2
+0     2    20
+1     6    17
+2     7     2
+```
+
+Eğer değişken ve gözlemlerle ilgili **kesin** bir işaretleme (seçim) yapacaksak `loc` kullanmalıyız. Aşağıdaki örnekte 0. satır ile 3. satır arasındakiler (3. satır dahil) ve yalnızca 'var3' sütunundakiler (değişken) seçilmiştir.
+```
+print(df.loc[0:3,'var3'])
+>>> 0     4
+1    24
+2     3
+3    14
+Name: var3, dtype: int64
+```
+Yukarıdaki yaptığımız işlemin aynısını `iloc` ile yapmak istersek hata alacağız. Bunun sebebi ise bizim 'var3' olarak spesifik (zorunlu) bir değişkeni seçmek istiyor olmamız. Fakat ne demiştik? Değişken ve gözlem seçmek için zorunlu kurallarımız varsa `loc` yapısını kullanmalıyız.
+```
+print(df.iloc[0:3,'var3'])
+>>> ValueError: Location based indexing can only have [integer, integer slice (START point is INCLUDED, END point is EXCLUDED), listlike of integers, boolean array] types
+```
+
+Aşağıdaki örnekte `iloc` yapısı ile 0. satırdan 3. satıra **KADAR** gözlemler ve yalnıza 'var3' değişkeni seçilmiştir.
+```
+print(df.iloc[0:3]['var3'])
+>>> 0     4
+1    24
+2     3
+Name: var3, dtype: int64
+```
+
+
