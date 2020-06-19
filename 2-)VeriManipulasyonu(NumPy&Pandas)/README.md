@@ -47,6 +47,22 @@
     - [Değişkenler Üzerinde Matematiksel İşlemler](#değişkenler-üzerinde-matematiksel-i̇şlemler)
     - [Değişken Silmek](#değişken-silmek)
   - [Gözlem ve Değişken Seçimi: loc & iloc](#gözlem-ve-değişken-seçimi-loc--iloc)
+  - [Koşullu Eleman İşlemleri](#koşullu-eleman-i̇şlemleri-1)
+  - [Birleştirme İşlemleri](#birleştirme-i̇şlemleri)
+    - [ignore_index](#ignore_index)
+    - [join](#join)
+  - [İleri Seviye Birleştirme İşlemleri (One to One - Many to One - Many to Many)](#i̇leri-seviye-birleştirme-i̇şlemleri-one-to-one---many-to-one---many-to-many)
+    - [One to One](#one-to-one)
+    - [Many to One](#many-to-one)
+    - [Many to Many](#many-to-many)
+  - [Toplulaştırma ve Gruplama (Aggregation & Grouping)](#toplulaştırma-ve-gruplama-aggregation--grouping)
+    - [Toplulaştırma (Aggregation)](#toplulaştırma-aggregation)
+    - [Gruplama (Grouping)](#gruplama-grouping)
+  - [İleri Toplulaştırma (Aggregation) İşlemleri](#i̇leri-toplulaştırma-aggregation-i̇şlemleri)
+    - [Aggregate](#aggregate)
+    - [Filter](#filter)
+    - [Transform](#transform)
+    - [Apply](#apply)
 
 # Veri Manipülasyonu (NumPy & Pandas)
 # NumPy
@@ -1033,4 +1049,428 @@ print(df.iloc[0:3]['var3'])
 Name: var3, dtype: int64
 ```
 
+## Koşullu Eleman İşlemleri
+
+Aşağıdaki örnekte `var1` değikeninin 15'ten büyük olan gözlemleri seçilmiştir.
+```
+import numpy as np
+import pandas as pd
+
+nd = np.random.randint(1,30,(10,3))
+df = pd.DataFrame(nd,columns=['var1','var2','var3'])
+
+print(df[df.var1 > 15])
+
+>>>    var1  var2  var3
+0    26    12    24
+2    20    24    14
+4    20     5     3
+5    21    11    23
+7    27    18     2
+9    25    22    27
+```
+
+Bu örnekte de aynı şekilde filtreleme yapılmış fakat bu sefer sadece `var1`'e ait gözlemler seçilmiştir.
+```
+import numpy as np
+import pandas as pd
+
+nd = np.random.randint(1,30,(10,3))
+df = pd.DataFrame(nd,columns=['var1','var2','var3'])
+
+print(df[df.var1 > 15]['var1'])
+
+>>> 0    16
+5    17
+7    26
+8    21
+Name: var1, dtype: int64
+```
+
+Aşağıdaki örnekte de 2 adet filtre uygulanmıştır. `var1` değişkeninin 15'ten büyük olan gözlemleri **VE** `var3` değişkeninin 5'ten küçük olan gözlemleri seçilmiştir.
+```
+import numpy as np
+import pandas as pd
+
+nd = np.random.randint(1,30,(10,3))
+df = pd.DataFrame(nd,columns=['var1','var2','var3'])
+
+print(df[(df.var1 > 15) & (df.var3 < 5)])
+
+>>>    var1  var2  var3
+0    23    22     4
+```
+
+## Birleştirme İşlemleri
+1 veya 1'den fazla DataFrame birleştirmek istersek `concat` fonksiyonunu kullanmamız gerekmektedir.
+
+Aşağıdaki örnekte `df2` DataFrame'i, `df` DataFrame'inin her gözlemine 99 eklenerek oluşturulmuştur. Bu bölümdeki örneklerimizi bu 2 DataFrame üzerinden gerçekleştireceğiz.
+
+```
+import numpy as np
+import pandas as pd
+
+nd = np.random.randint(1,30,(5,3))
+
+df = pd.DataFrame(nd,columns=['var1','var2','var3'])
+
+df2 = df + 99
+```
+
+`df` ve `df2` DataFrame'lerini `concat` sayesinde birleştirip `yeni_df` adındaki DataFrame'i oluşturuyoruz.
+```
+yeni_df = pd.concat([df,df2])
+
+print(yeni_df)
+
+>>>    var1  var2  var3
+0    12    16    13
+1    23    24     2
+2    16    13     4
+3     2    18    25
+4    17    11    20
+0   111   115   112
+1   122   123   101
+2   115   112   103
+3   101   117   124
+4   116   110   119
+```
+### ignore_index
+Yukarıdaki örnekten de göreceğimiz üzere DataFrame'leri birleştirdik fakat index problemi ile karşılaştık. 2 DataFrame'inde kendi index'leri olduğundan index'ler yeniden indexlenmeden birleştirildi. Bunun önüne geçmek için `ignore_index` argümanını `True` olarak göndermeliyiz. Bu sayede birleştirilen DataFrame'lerin indexleri sıfırlanacak ve oluşan `yeni_df` için en baştan indexleme yapılacak.
+```
+yeni_df = pd.concat([df,df2],ignore_index=True)
+
+print(yeni_df)
+
+>>>    var1  var2  var3
+0    12    16    13
+1    23    24     2
+2    16    13     4
+3     2    18    25
+4    17    11    20
+5   111   115   112
+6   122   123   101
+7   115   112   103
+8   101   117   124
+9   116   110   119
+```
+
+Peki ya değişken (kolon / sütun) isimlerimiz farklı olsaydı bu DataFrame'leri nasıl değiştirebilirdik? <br> Önce `df2` DataFrame'mizin değişken isimlerini değiştiriyoruz ve sonra tekrar `concat` yardımı ile `df` ve `df2` DataFrame'lerini birleştirmeye çalışıyoruz(!).
+```
+df2.columns = ['var1','var2','deg3']
+
+print(df.columns)
+>>> Index(['var1', 'var2', 'var3'], dtype='object')
+
+print(df2.columns)
+>>> Index(['var1', 'var2', 'deg3'], dtype='object')
+
+
+print(pd.concat([df,df2]))
+
+>>>    var1  var2  var3   deg3
+0    12     8  26.0    NaN
+1     2     2   3.0    NaN
+2    17    29  17.0    NaN
+3    28    17   1.0    NaN
+4     2    12  15.0    NaN
+0   111   107   NaN  125.0
+1   101   101   NaN  102.0
+2   116   128   NaN  116.0
+3   127   116   NaN  100.0
+4   101   111   NaN  114.0
+```
+### join
+Eğer ki JupyterLab üzerinde çalışıyorsak bize uyarı verecektir falat ben bu dökümanı hazırlarken Spyder kullanmam hasebiyle herhangi bir uyarı almadım. Fakat görüleceği üzere istediğimiz şekilde 2 DataFrame'i birleştiremedik. Bunun sebebi `df` ve `df2` DataFrame'lerinin değişken isimlerinin farklı olmasıdır. Böyle bir durum ile karşılaşırsak yalnızca kesişen (aynı olan) değişkenleri birleştirmek isteyebiliriz. Bunun için `join='inner'` argümanını göndermemiz yetecektir. 2 DataFrame için de ortak olan `var1` ve `var2` değişkenleri birleştirilmiştir.
+```
+print(pd.concat([df,df2],join='inner',ignore_index=True))
+
+>>>    var1  var2
+0    12     8
+1     2     2
+2    17    29
+3    28    17
+4     2    12
+5   111   107
+6   101   101
+7   116   128
+8   127   116
+9   101   111
+```
+
+
+## İleri Seviye Birleştirme İşlemleri (One to One - Many to One - Many to Many)
+### One to One
+Aşağıdaki örnekte `df1` ve `df2` DataFrame'lerinin ikisinde de ortak olarak bulunan `calisanlar` değişkenine göre gruplama işlemi yapılmıştır. Bunun için `merge` fonksiyonu kullanılmaktadır. Bu fonksiyon otomatik olarak 2 DataFrame'deki ortak değişkenleri bulup onlara göre birleştirme işlemi yapmaktadır. Eğer istediğimiz değişkene göre birleştirme işlemi yapmak istersek `on` parametresini kullanmamız gerekmektedir. Kullanmazsak otomatik olarak kendi bulduğu değişkenlere göre birleştirecektir (merge).
+```
+import pandas as pd
+
+df1 = pd.DataFrame({'calisanlar':['Ali','Veli','Ayse','Fatma'],
+                    'grup':['Muhasebe','Muhendislik','Muhendislik','İK']})
+
+
+df2 = pd.DataFrame({'calisanlar':['Ayse','Ali','Veli','Fatma'],
+                    'ilk_giris':[2010,2009,2014,2019]})
+
+print(pd.merge(df1,df2,on='calisanlar'))
+
+>>>   calisanlar         grup  ilk_giris
+0        Ali     Muhasebe       2009
+1       Veli  Muhendislik       2014
+2       Ayse  Muhendislik       2010
+3      Fatma           İK       2019
+```
+
+### Many to One
+Aşağıdaki örnekte önce `df1` ve `df2` DataFrame'leri ortak değişkenleri olan `calisanlar`'a göre birleştirilmiş ve `df3` DataFrame'i oluşturulmuştur. Daha sonra `df3` ve `df4` DataFrame'leri ortak olan `grup` değişkenine göre birleştirilmiştir.
+```
+import pandas as pd
+
+df1 = pd.DataFrame({'calisanlar':['Ali','Veli','Ayse','Fatma'],
+                    'grup':['Muhasebe','Muhendislik','Muhendislik','İK']})
+
+df2 = pd.DataFrame({'calisanlar':['Ayse','Ali','Veli','Fatma'],
+                    'ilk_giris':[2010,2009,2014,2019]})
+
+df3 = pd.merge(df1,df2)
+
+df4 = pd.DataFrame({'grup':['Muhasebe','Muhendislik','İK'],
+                    'mudur':['Caner','Mustafa','Berkcan']})
+
+print(pd.merge(df3,df4))
+
+>>>   calisanlar         grup  ilk_giris    mudur
+0        Ali     Muhasebe       2009    Caner
+1       Veli  Muhendislik       2014  Mustafa
+2       Ayse  Muhendislik       2010  Mustafa
+3      Fatma           İK       2019  Berkcan
+```
+
+### Many to Many
+Bu örneğimizde ise `df1` ve `df5` DataFrame'leri arasında ortak olan `grup` değişkenine göre birleştirme işlemi gerçekleştirilmiştir.
+```
+import pandas as pd
+
+df1 = pd.DataFrame({'calisanlar':['Ali','Veli','Ayse','Fatma'],
+                    'grup':['Muhasebe','Muhendislik','Muhendislik','İK']})
+
+df5 = pd.DataFrame({'grup':['Muhasebe','Muhasebe','Muhendislik','Muhendislik','İK','İK'],
+                    'yetenekler':['matematik','excel','kodlama','linux','excel','yonetim']})
+
+print(pd.merge(df1,df5))
+
+>>>   calisanlar         grup yetenekler
+0        Ali     Muhasebe  matematik
+1        Ali     Muhasebe      excel
+2       Veli  Muhendislik    kodlama
+3       Veli  Muhendislik      linux
+4       Ayse  Muhendislik    kodlama
+5       Ayse  Muhendislik      linux
+6      Fatma           İK      excel
+7      Fatma           İK    yonetim
+```
+
+
+## Toplulaştırma ve Gruplama (Aggregation & Grouping)
+### Toplulaştırma (Aggregation)
+Sık kullanılan toplulaştırma (aggregation) fonksiyonları;
+- `count`  -> değişken içerisinde kaç adet değer var
+- `mean`   -> değişkene ait verilerin ortalaması
+- `median` -> değişkene ait verilerin medyanı
+- `min`    -> değişken içerisindeki minimum değer
+- `max`    -> değişken içerisindeki maximum değer
+- `std`    -> değişkenin standart sapması
+- `var`    -> değişkenin varyansı
+- `sum`    -> değişkene ait değerlerin toplamı
+
+
+`seaborn`; içerisinde hazır veri setleri bulunduran bir kütüphanedir.
+```
+import seaborn as sns
+
+df = sns.load_dataset('planets')
+
+print(df.count())
+
+>>> method            1035
+number            1035
+orbital_period     992
+mass               513
+distance           808
+year              1035
+dtype: int64
+```
+
+Eğer bir veri seti (DataFrame) üzerindeki betimsel istatistikleri görmek istersek `describe` fonksiyonunu kullanmamız gerekmektedir.
+```
+import seaborn as sns
+
+df = sns.load_dataset('planets')
+
+print(df.describe())
+
+>>>             number  orbital_period        mass     distance         year
+count  1035.000000      992.000000  513.000000   808.000000  1035.000000
+mean      1.785507     2002.917596    2.638161   264.069282  2009.070531
+std       1.240976    26014.728304    3.818617   733.116493     3.972567
+min       1.000000        0.090706    0.003600     1.350000  1989.000000
+25%       1.000000        5.442540    0.229000    32.560000  2007.000000
+50%       1.000000       39.979500    1.260000    55.250000  2010.000000
+75%       2.000000      526.005000    3.040000   178.500000  2012.000000
+max       7.000000   730000.000000   25.000000  8500.000000  2014.000000
+```
+
+Eğer bu şekilde betimsel istatistiklerin görünümü hoşumuza gitmez ise `.T` yardımı ile tersine (transpose) çevirebiliriz.
+```
+import seaborn as sns
+
+df = sns.load_dataset('planets')
+
+print(df.describe().T)
+
+>>>                  count         mean  ...       75%       max
+number          1035.0     1.785507  ...     2.000       7.0
+orbital_period   992.0  2002.917596  ...   526.005  730000.0
+mass             513.0     2.638161  ...     3.040      25.0
+distance         808.0   264.069282  ...   178.500    8500.0
+year            1035.0  2009.070531  ...  2012.000    2014.0
+
+[5 rows x 8 columns]
+```
+
+Eğer veri setimizde eksik (aykırı) veriler var ama yine de betimsel istatistiği görmek istiyorsak `dropna` fonksiyonunu kullanabiliriz. Bu sayede eksik veriler yok sayılarak betimsel istatistik çıkarılacaktır.
+```
+import seaborn as sns
+
+df = sns.load_dataset('planets')
+
+print(df.dropna().describe().T)
+
+>>>                 count         mean          std  ...       50%        75%      max
+number          498.0     1.734940     1.175720  ...     1.000     2.0000      6.0
+orbital_period  498.0   835.778671  1469.128259  ...   357.000   999.6000  17337.5
+mass            498.0     2.509320     3.636274  ...     1.245     2.8675     25.0
+distance        498.0    52.068213    46.596041  ...    39.940    59.3325    354.0
+year            498.0  2007.377510     4.167284  ...  2009.000  2011.0000   2014.0
+
+[5 rows x 8 columns]
+```
+
+### Gruplama (Grouping)
+Gruplama işlemleri ve toplulaştırma işlemleri genellikle beraber kullanılır. Belirli bir değişkene (kategorik) göre veriler sınıflandırılır. Gruplama işlemi için `groupby` fonksiyonu kullanılır. Bu fonksiyona parametre olarak hangi kategorik değişkene göre gruplama yapmak istiyorsak onu göndeririz.
+
+Ne demiştik? Gruplama ve toplulaştırma fonksiyonları genelde beraber kullanılır. Aşağıdaki örnekte de önce verileri `gruplar` kategorik değişkenine göre grupladık daha sonra da bu grupların ortalamasını aldık.
+```
+import pandas as pd
+
+df = pd.DataFrame({'gruplar':['A','B','C','A','B','C'],
+                   'veri':[10,11,52,23,42,55]},
+                    columns = ['gruplar','veri'])
+
+print(df.groupby('gruplar').mean())
+
+>>> gruplar      
+A        16.5
+B        26.5
+C        53.5
+```
+
+## İleri Toplulaştırma (Aggregation) İşlemleri
+### Aggregate
+Bir DataFrame üzerinde farklı değişkenler üzerinde farklı işlemleri gerçekleştirmek istersek `aggregate` fonksiyonunu kullanırız.
+
+Aşağıdaki örnekte `df` DataFrame'indeki `gruplar` değişkenine göre verileri grupladık, `degisken1` ve `degisken2` değişkenlerine özel istatistikleri `aggregate` fonksiyonu sayesinde yazdık.
+
+```
+import pandas as pd
+import numpy as np
+
+df = pd.DataFrame({'gruplar':['A','B','C','A','B','C'],
+                   'degisken1':[10,23,33,22,11,99],
+                   'degisken2':[100,253,333,262,111,969]},
+                  columns = ['gruplar','degisken1','degisken2'])
+
+print(df.groupby('gruplar').aggregate(['min',np.median,'max']))
+
+>>>         degisken1            degisken2            
+              min median max       min median  max
+gruplar                                           
+A              10     16  22       100    181  262
+B              11     17  23       111    182  253
+C              33     66  99       333    651  969
+```
+
+### Filter
+Bazı özel durumlarda kendi yazdığımız özel fonksiyonları DataFrame'lere gönderip ilgili değişkene göre filtreleme yapmak isteyebiliriz. Yani kendi fonksiyonlarımızı filtre olarak kullanabiliriz. Bu işlemi `filter` fonksiyonu ile gerçekleştirebiliriz.
+
+Aşağıdaki örnekte `degisken1` değişkeninin değerlerinden standart sapması 9'dan büyük olanlar filtrelenmiştir.
+```
+import pandas as pd
+
+df = pd.DataFrame({'gruplar':['A','B','C','A','B','C'],
+                   'degisken1':[10,23,33,22,11,99],
+                   'degisken2':[100,253,333,262,111,969]},
+                  columns = ['gruplar','degisken1','degisken2'])
+
+def custom_filter(x):
+    return x['degisken1'].std() > 9
+
+print(df.groupby('gruplar').filter(custom_filter))
+
+>>>   gruplar  degisken1  degisken2
+2       C         33        333
+5       C         99        969
+```
+
+### Transform
+`transform` fonksiyonu sayesinde istediğimiz bir fonksiyonu DataFrame üzerinde uygulayabiliriz. Bu fonksiyon vektörel çalışan bir fonksiyondur.
+
+Aşağıdaki örnekte her bir veriyi; kendisi - kendisinin ortalamasına eşitledik. Öncesinde ilk değişken olan `gruplar`'ı DataFrame içerisinden çıkarttık. Çünkü bu değişken kategorik bir değişken olduğundan üzerinde sayısal işlem gerçekleştirememekteyiz.
+```
+import pandas as pd
+
+df = pd.DataFrame({'gruplar':['A','B','C','A','B','C'],
+                   'degisken1':[10,23,33,22,11,99],
+                   'degisken2':[100,253,333,262,111,969]},
+                  columns = ['gruplar','degisken1','degisken2'])
+
+df = df.iloc[:,1:]
+
+print(df.transform(lambda x: x-x.mean()))
+
+>>>    degisken1  degisken2
+0      -23.0     -238.0
+1      -10.0      -85.0
+2        0.0       -5.0
+3      -11.0      -76.0
+4      -22.0     -227.0
+5       66.0      631.0
+```
+
+
+### Apply
+DataFrame'in değişkenlerinin üzerinde gezinme yeteneği olan ve aggregation (toplulaştırma) işlemleri yapmamızı sağlayan bir fonksiyondur.
+
+Aşağıdaki örnekte kendimiz bir fonksiyon tanımladık ve bunu `df` DataFrame'i üzerinde uyguladık
+```
+import pandas as pd
+
+
+df = pd.DataFrame({
+                   'degisken1':[10,23,33,22,11,99],
+                   'degisken2':[100,253,333,262,111,969]},
+                  columns = ['degisken1','degisken2'])
+
+def custom_sum(sutun):
+    toplam = 0
+    for gozlem in sutun:
+        toplam += gozlem
+    return toplam
+
+print(df.apply(custom_sum))
+
+>>> degisken1     198
+degisken2    2028
+dtype: int64
+```
 
