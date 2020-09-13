@@ -16,6 +16,7 @@
   - [Google Data Set Search](#google-data-set-search)
   - [İBB Açık Veri Portalı](#i̇bb-açık-veri-portalı)
   - [DrDataStats](#drdatastats)
+  - [Veri Kovanı](#veri-kovanı)
 - [Kaynakça](#kaynakça)
 
 
@@ -154,6 +155,9 @@ Temelde 2'ye ayrılmaktadır.
 
 ## DrDataStats
 [DrDataStats](https://www.drdatastats.com/) mottosu "Sadece Veri, Sadece İstatistik (Only Data, Only Statistics)" olan web sitesidir. Aynı zamanda [Din](https://www.drdatastats.com/din/) bölümü çok hoşuma gitti.
+
+## Veri Kovanı
+[VeriKovanı](https://verikovani.ssb.gov.tr/) Savunma Sanayi Başkanlığı'nın açık veri portalı
 
 # Kaynakça
 1. Gülseçen, Sevinç. (Ed.) (2015). Bilgi Yönetimi. İstanbul: Papatya Yayıncılık
