@@ -19,5 +19,5 @@ def get_data():
         DF[f'{col_name}'] = DF[f'{col_name}'].astype('int')
     DF['hastalarda_zaturre_oran'] = DF['hastalarda_zaturre_oran'].str.replace(',', '.')
     DF['hastalarda_zaturre_oran'] = pd.to_numeric(DF['hastalarda_zaturre_oran'])
-    DF['tarih'] = pd.to_datetime(DF['tarih'])
+    DF['tarih'] = pd.to_datetime(DF['tarih'], format='%d.%m.%Y')
     return DF
