@@ -12,3 +12,7 @@ x / y
 x * y
 
 string = "Enes Baysan" # bildiğimiz gibi string tipinde bir veri türü
+
+?rep # fonksiyon hakkında bilgi verir
+example(rep) # fonksiyon hakkında örnek verir
+help(rep) # fonksiyon hakkında bilgi verir
