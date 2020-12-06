@@ -1,0 +1,164 @@
+---
+title: "Vektörlerde İstatistiksel İşlemler"
+author: "Baysan"
+date: "12/6/2020"
+output: html_document
+---
+
+
+
+### Vektörün Gözlem Sayısı
+```{r}
+x <- c(23,45,67,12,34,56,89,34)
+length(x) # gözlem sayısını verir (vektör uzunluğu)
+```
+
+### Vektörün Elemanları Toplamı
+```{r}
+x <- c(23,45,67,12,34,56,89,34)
+sum(x) # vektörün elemanlarını toplar
+```
+
+### Vektörün Aritmetik Ortalaması
+```{r}
+x <- c(23,45,67,12,34,56,89,34)
+mean(x) # vektörün ortalamasını verir
+```
+
+
+### Serbestlik Derecesi (N-1)
+Serbestlik derecesi = Gözlem sayısı - 1
+```{r}
+x <- c(23,45,67,12,34,56,89,34)
+length(x) - 1 # serbestlik derecesini verir
+```
+
+### Standart Sapma
+- Değişkendeki değerlerin ortalamadan ne kadar saptığını gösterir
+- Değerlerin ortalamadan sapma değerlerinin ortalamasıdır
+- Standart sapma değerinin yüksek olması değişkendeki değerlerin birbirine uzak olduğunu göstermektedir
+```{r}
+x <- c(23,45,67,12,34,56,89,34)
+sd(x) # standart sapmayı verir
+```
+
+### Varyans
+- Standart sapmanın karesidir
+- Varyans gözlemlerin değişkenliğini tanımlayan bir numerik değerdir
+- Gözlemlerin örneklemde ne kadar yayıldığını gösterir
+- Standart sapmadan farkı ise; standart sapma veri seti içerisindeki gözlemlerin ortalamadan farklılığını tanımlarken varyans değişkenliği tanımlar
+```{r}
+x <- c(23,45,67,12,34,56,89,34)
+sd(x)**2 # standart sapmanın karesi yani varyansı verir
+var(x) # varyansı hesaplamak için kullanılan fonksiyon
+```
+
+### Medyan
+- Seriyi büyükten küçüğe sıraladığımızda ortadaki değer medyandır
+```{r}
+x <- c(23,45,67,12,34,56,89,34)
+median(x) # medyanı verir
+```
+
+### Açıklık
+- Serideki min değer ile max değer arasındaki farktır
+```{r}
+x <- c(23,45,67,12,34,56,89,34)
+max(x) - min(x) # açıklık değeridir
+```
+
+
+### Çeyreklik
+- Seriyi 4 eşit parçaya böldüğümüzde elde ettiğimiz q1, q2, q3 değerleridir
+```{r}
+x <- c(23,45,67,12,34,56,89,34)
+quantile(x) # çeyreklikleri verir
+
+quantile(x, probs=c(0.25,0.50,0.75)) # probs parametresini verirsek seriyi istediğimiz çeyreklere ayırabiliriz
+```
+
+
+### Çarpıklık Katsayısı
+- -1 ile 1 arasındadır
+- 0 ile 1 arasında ise değişken sağa çarpıktır (değerler daha düşük değerlidir)
+- 0 ile -1 arasında ise değişken sola çarpıktır (değerler daha büyük değerlidir)
+```{r}
+x <- c(12,13,14,15,16,100,120)
+mean(x)
+median(x) # bu örnekteki gibi aykırı değerler olduğunda medyan değerini dikkate almak daha faydalı olacaktır
+
+hist(x)
+
+library('e1071') # install e1071
+
+skewness(x) # x vektörünün çarpıklık katsayısını verir
+
+```
+
+### Frekanslar
+- Değişkendeki elemanların tekrar sayısıdır
+- Seride bir değerin ne kadar tekrar ettiğini gösterir
+```{r}
+x <- c(12,12,12,13,13,14,14,14,14,15,15,16,17,19,20)
+table(x) # frekans tablosunu verir
+unique(x) # serideki unique değerleri verir
+table(x)[['12']] # 12'nin kaç kere tekrar ettiği
+```
+
+
+### Kayıp Gözlemlerin Hesaplamalara Etkisi
+```{r}
+x <- c(12,13,14,15,NA)
+
+sum(x) # tüm değerleri toplayacak fakat NA olduğundan dolayı NA dönecek
+sum(x, na.rm=T) # NA olan değerleri hesaba katmadan toplar
+
+mean(x, na.rm=T)
+sd(x, na.rm=T)
+median(x,na.rm=T)
+
+is.na(x) # logical sorgu çalışır x içerisindeki elemanların NA olup olmadığını döner
+which(is.na(x)) # NA olan değerlerin hangi indiste olduğunu verir
+
+y <- c(1,2,3,4,NA,NA,12,13,14,NA,15,16,17,NA)
+which(is.na(y)) # hangi indiste NA var
+any(is.na(y)) # herhangi bir NA değeri var mı
+
+mean(y,na.rm=any(is.na(y))) # eğer NA varsa na değerleri hesaba katma
+
+y[which(is.na(y))] <- 0 # NA olan değerleri 0 olarak set ettik
+y
+```
+
+### Normal Dağılan Veriler
+```{r}
+x <- rnorm(100) # 100 adet normal dağılan veriyi oluşturur. Default olarak ortalama 0 ve standart sapma 1 alınır
+hist(x)
+
+x <- rnorm(100,mean = 10,sd=2) # ortalaması 1* olan standart sapması 2 olan 100 adet veri
+x
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
