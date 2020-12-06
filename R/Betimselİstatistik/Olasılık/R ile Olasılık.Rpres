@@ -1,0 +1,94 @@
+R ile Olasılık
+========================================================
+author: Baysan
+date: 06/12/2020
+autosize: true
+
+Olasılık Nedir
+========================================================
+Şansa sayısal bir değer atamaya olasılık diyebiliriz.
+
+Bir deney **eşit olasılıkla N farklı sonuç** verirse ve bu **sonuçların M tanesi bir A olayına uygun** ise, A olayının **P(A)** ile gösterilebilecek gerçekleşme olasılığı
+
+P(A) = Uygun sonuçların sayısı / Örnek uzaydaki tüm sonuçların sayısı 
+
+Yani; **P(A) = M / N**
+
+Olasılık Aksiyomları
+========================================================
+- Her A olayının olasılığı P(A), 0 <= P(A) <= 1 koşulu ile pozitif bir sayıdır
+- Bir A olayı kesin olacak ise P(A) = 1'dir
+- Eğer A1, A2, .... An olayları birlikte meydana gelemeyen olayar ise P(A1,A2,An) = P(A1) + P(A2) + P(An) olur.
+
+
+Büyük Sayılar Kanunu (Law of Large Numbers)
+========================================================
+Hilesiz bir paranın havaya atıldığında Tura gelme olayının olasılığı;
+
+P(Tura Gelme Olasılığı) = Uygun Sonuçlar (2 yüzünde sadece biri Tura olduğu için 1) / Örnek Uzaydaki Tüm Sonuçlar (2 yüzü de gelebileceğinden dolayı 2)
+
+Tura gelme olayına P(A) dersek; P(A) = M/N = 1/2'den hilesiz bir para havaya atıldığında Tura gelme olasılığına %50 diyebiliriz.
+
+Bu parayı 1000 kere havaya attığımızda 862 kere Yazı gelmiş ve 138 kere Tura gelmiş olabilir. Fakat bu deneyi (para atışı) ne kadar çok tekrarlarsak Tura'ların veya Yazı'ların sıklığı, gözlem sayısı arttıkça bir o kadar %50'ye yaklaşacaktır. Bu olguya **Büyük Sayılar Kanunu** denmektedir.
+
+
+
+Büyük Sayılar Kanunu (Law of Large Numbers) Deney Ön Hazırlık
+========================================================
+```{r}
+deney_yap <- function(atis){
+  para <- c('Y','T') # Y ve T'den oluşan bir vektör (yani para) oluştur
+  atış <- sample(para,atis,replace=T) # parametre olarak gelen atış sayısı kadar iadesiz örnek seç para vektöründen
+  yazı <- table(atış)[['Y']] # Gelen Y sayısı
+  tura <- table(atış)[['T']] # Gelen T sayısı
+  tura / length(atış) # Tura gelme oranını yaz
+}
+
+```
+
+Büyük Sayılar Kanunu (Law of Large Numbers) Deney
+========================================================
+```{r}
+deney_yap(10) # Para 10 kere havaya atıldı ve çıktı kadar Tura geldi
+deney_yap(100) # Para 100 kere havaya atıldı
+deney_yap(1000) # Para 1000 kere havaya atıldı
+deney_yap(1000000) # Para 1000000 kere havaya atıldı
+```
+
+
+Rassal Deney (Random Experiment)
+========================================================
+Bir deneyin rassal olabilmesi için 3 koşul vardır
+- Deneyin ortaya koyabileceği tüm olası sonuçlar bilinmelidir
+- Deneyin hangi sonuçla sonuçlanacağı bilinmemelidir
+- Deney aynı koşullar altında tekrarlanabilmelidir
+
+
+Örneklem Uzayı (Sample Space) ve Örneklem Noktaları (Sample Points)
+========================================================
+Tüm olası sonuçlarının bilindiği bir deneyin, tüm olası sonuçları bizim **örnek uzayı kümemizi** oluşturur. Örneklem uzayı olasılık kuramı içerisinde **S** olarak gösterilir.
+
+Örneklem uzayının tüm elemanları ise örneklem noktalarıdır.
+
+Bir paranın havaya atılması deneyindeki örneklem uzayımız **{Y,T}**'dir.
+
+İki para aynı anda havaya atıldığında ise; **S = {Y,T,Y,T}**'dir.
+
+Kesikli (discrete) ve Sürekli (continous) Örnek Uzaylar
+========================================================
+Örnek uzaylar bir aralıktaki tüm değerleri içerdikleri zaman sürekli, bazı değerleri (tam değerler) içerdikleri zaman kesikli örnek uzaylar olarak adlandırılırlar.
+
+Sürekli Örnek Uzaylar;
+- Saat aralığı
+- Satış fiyatları
+
+Kesikli Örnek Uzaylar;
+- Bir paranın atılması
+- Bir zar atılmaı
+
+Kaynakça
+========================================================
+- Betimsel İstatistik (Prof. Dr. Necmi Gürsakal)
+- Olasılık ve İstatistik (Prof. Dr. Fikri Akdeniz)
+- R ile Betimsel İstatistik (Prof. Dr. Necmi Gürsakal)
+- Karar Verme (Prof. Dr. Necmi Gürsakal, Prof. Dr. Mustafa Aytaç)
