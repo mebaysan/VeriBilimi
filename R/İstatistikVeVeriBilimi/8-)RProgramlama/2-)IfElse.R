@@ -17,6 +17,7 @@ if (mean(y) == 5) {
 
 mean(y)
 
-
+z <- 3
+ifelse(z < 5, 'DOĞRU','YANLIŞ') # single line ifelse -> ilk paramtre doğru ise 2. parametreyi yaz, değil ise 3. parametreyi yaz
 # & -> VE
 # | -> VEYA
