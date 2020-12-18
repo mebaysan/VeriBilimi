@@ -1,0 +1,257 @@
+<html>
+<head>
+<style type="text/css">
+.inline {
+  background-color: #f7f7f7;
+  border:solid 1px #B0B0B0;
+}
+.error {
+	font-weight: bold;
+	color: #FF0000;
+}
+.warning {
+	font-weight: bold;
+}
+.message {
+	font-style: italic;
+}
+.source, .output, .warning, .error, .message {
+	padding: 0 1em;
+  border:solid 1px #F7F7F7;
+}
+.source {
+  background-color: #f5f5f5;
+}
+.left {
+  text-align: left;
+}
+.right {
+  text-align: right;
+}
+.center {
+  text-align: center;
+}
+.hl.num {
+  color: #AF0F91;
+}
+.hl.str {
+  color: #317ECC;
+}
+.hl.com {
+  color: #AD95AF;
+  font-style: italic;
+}
+.hl.opt {
+  color: #000000;
+}
+.hl.std {
+  color: #585858;
+}
+.hl.kwa {
+  color: #295F94;
+  font-weight: bold;
+}
+.hl.kwb {
+  color: #B05A65;
+}
+.hl.kwc {
+  color: #55aa55;
+}
+.hl.kwd {
+  color: #BC5A65;
+  font-weight: bold;
+}
+</style>
+<title>Bayesgil Karar Ağacı Problem Çözümü</title>
+<style>
+  h1, h2, h3, h4{
+  color:#B22222;
+  }
+</style>
+</head>
+
+<body>
+
+<h1>Beklenen Değer Kriteri</h1>
+Beklenen değer kriteri; risk altında karar verme kriterlerinden birisidir. Beklenen değer kriterinden yararlanabilmek için doğa durumlarına olasılık atayabilmemiz gerekir.<br>
+Bu kritere göre karar tablomuz; kârları gösteriyor ise kârı maximize etmeyi, zararları/kayıpları gösteriyor ise kayıpları minimize etmeyi amaçlar.
+
+<h3>Beklenen Değerin Hesaplanması</h3>
+Bir karar matrisindeki alternatiflerin mümkün her durumunun olasılığının ilgili durumun çıktısı (kâr-zarar) ile çarpılıp çıkan her bir sonucun toplanması ile ilgili alternatifin beklenen değeri elde edilir. <br>
+Bu örnek için tablomuz kârları gösterdiğinden beklenen değeri en yüksek olan karar verilir.
+<div class="chunk" id="unnamed-chunk-1"><div class="rcode"><div class="output"><pre class="knitr r">##               A.Modası B.Modası C.Modası Beklenen Değerler
+## Bot Üretmek       75.0     65.0     75.0              71.0
+## Çizme Üretmek     65.0     75.0     70.0              70.5
+## Olasılıklar        0.3      0.4      0.3               0.0
+</pre></div>
+</div></div>
+
+<h1>Mükemmel Bilginin Beklenen Değeri (EVPI)</h1>
+Expected value of perfect information; <b>belirlilik ortamındaki beklenen değerin belirsizlik ortamındaki beklenen değerden farkına eşittir</b>. Yani geleceği ön görebilseydik elde etmek isteyeceğimiz en iyi faydanın değeridir. Böyle bir durumda ön göremediğimiz her bir doğa durumu için faydası en iyi olan alternatifi seçmek isterdik.
+<h3>Mükemmel Bilginin Beklenen Değerinin Hesaplanması</h3>
+Karar matrisindeki <b>her bir durum için</b> elde edebileceğimiz en iyi faydayı hesaplar ve bu mükemmel bilgiyle elde edebileceğimiz faydaların toplam değeri (ki bu belirlilik altında olurdu) ile bir üst başlıkta açıkladığımız <b>beklenen değerlerin maximumu</b> ile farkını alıp EVPI'yi bulabiliriz.
+<div class="chunk" id="unnamed-chunk-2"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">max_beklenen_deger</span> <span class="hl kwb">=</span> <span class="hl kwd">max</span><span class="hl std">(df[</span><span class="hl str">'Beklenen Değerler'</span><span class="hl std">])</span>
+<span class="hl std">max_beklenen_deger</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## [1] 71
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl std">mukemmel_bilgiyle_beklenen_deger</span> <span class="hl kwb">=</span> <span class="hl kwd">sum</span><span class="hl std">(</span><span class="hl kwd">sapply</span><span class="hl std">(df[</span><span class="hl num">1</span><span class="hl opt">:</span><span class="hl num">3</span><span class="hl std">],max)</span> <span class="hl opt">*</span> <span class="hl kwd">sapply</span><span class="hl std">(df[</span><span class="hl num">3</span><span class="hl opt">:</span><span class="hl num">3</span><span class="hl std">,</span><span class="hl num">1</span><span class="hl opt">:</span><span class="hl num">3</span><span class="hl std">],max))</span>
+<span class="hl std">mukemmel_bilgiyle_beklenen_deger</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## [1] 75
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl std">EVPI</span> <span class="hl kwb">=</span> <span class="hl std">mukemmel_bilgiyle_beklenen_deger</span> <span class="hl opt">-</span> <span class="hl std">max_beklenen_deger</span>
+<span class="hl kwd">cat</span><span class="hl std">(</span><span class="hl str">&quot;Expected Value of Perfect Information -&gt;&quot;</span><span class="hl std">,EVPI)</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## Expected Value of Perfect Information -&gt; 4
+</pre></div>
+</div></div>
+
+Bu örnek için EVPI=4 ifadesini şu şekilde yorumlayabiliriz; herhangi bir kaynaktan/firmadan ilave bilgi almamız durumunda (belirsizliğimizi azaltmak için) bu bilginin bize getireceği fayda maximum 4₺'dir (çünkü ilave bilgi elde etsek bile bu belirsizliği tamamen ortadan kaldırmayacaktır). 4₺ için danışmanlık hizmeti almaya değer mi? <br> <br>
+
+<b style='color:red;'>UNUTMAYALIM! Öğrenci arkadaşlarımız bu ve benzer kriterler için satır minimumunu veya sütun minimumu ve benzer işlevleri ezberlemekteler(!) Bu tür ezberler üzerinden gidildiğinde transpose'u alınmış bir karar matrisi ile karşılaşırsak yanlış sonuçlar elde etmemiz muhtemeldir. Satırların ve sütunların neleri temsil ettiği iyi anlaşılmalıdır (alternatif mi yoksa doğa durumu mu?) Bu soruda sütun maximumlarını almış olmamız beklenen değer kriterinden dolayı değil; karar matrisinde doğa durumlarının sütunlarda tutuluyor olmasıdır. </b>
+
+<h1>Örnek Bilginin Beklenen Değeri (EVSI)</h1>
+Expected value of sample information; bir kararı vermeden önce ek bilgilere erişerek sağlayabileceğimiz faydada beklenen artıştır. Örnek olarak bir karar vermeden önce pazar araştırması yaptırdığımız zaman, araştırma sonrası elde ettiğimiz bilginin beklediğimiz değere etki edecek olan faydasıdır. Örnek bilgi elde edildiğinde karar ağaçlarında yapraklara bu bilginin maliyetinin de eklenmesi (örnek olarak bize gelecek olan örnek bilginin pazar araştırması maliyeti 5₺ ise bunun muhtemel çıktılara eklenmesi) gerekmektedir.<br>
+<b>EVSI = |EVwSI - EVwoSI|</b>
+
+<h2>Örnek Bilgi ile Beklenen Değer (EVwSI)</h2>
+Expected value with sample information; beklenen değeri artırmak için ilave bilgi kazanmak uğruna verdiğimiz kararın sonucunda elde ettiğimiz <b>yeni beklenen değer</b>dir.
+
+<h2>Örnek Bilgisiz Beklenen Değer (EVwoSI)</h2>
+Expected value without sample information; karar vermek için herhangi bir ilave bilgi (mesela danışmanlık, pazar araştırması vb) almadan önce elde ettiğimiz beklenen değerdir.<br> 
+<b>EVwoSI'a önsel beklenen değer, EVwSI'a sonsal beklenen değer diyebiliriz.</b>
+
+<h1>Verimlilik</h1>
+EVSI'nin mükemmel bilgiler elde edeceğini ön görmeyiz. Fakat bu bilgilerin değerini ifade etmek için verimlilik ölçüsü kullanırız. <br>
+Mükemmel bilgi %100 verimlilik düzeyine sahiptir. Bu durumda örnek bilginin (EVSI) verimliliğini şu formül ile hesaplarız ve elde ettiğimiz sonuç örnek bilgimizin verimlilik oranını ifade eder. <br>
+<b>E = (EVSI / EVPI) * 100</b><br>
+Bu işlem sonucunda örnek bilgiyi elde etmek için yaptığımız çalışma (pazar araştırması, danışmanlık vb) mükemmel bilginin ancak E'si kadar verimlidir diyebiliriz. Verimlilik (E) oranı ne kadar yüksek ise örnek bilginin bir o kadar mükemmel bilgi kadar iyi olduğunu gösterir ve ilave kaynakların çok da gerekli olmadığını, daha iyi sonuçlar vermeyeceğini gösterir.
+
+<h1>Olasılık Aksiyomları</h1>
+<li> P ( S ) = 1</li>
+<li> P ( Ø ) = 0</li>
+<li> P(A') = 1 - P(A)</li>
+A ve B herhangi iki olay olmak üzere;
+<li>P( A U B ) = P ( A ) + P ( B ) – P ( A ∩ B )</li>
+A ve B ayrık iki olay (aynı anda gerçekleşemiyorlar) ise;
+<li>P( A U B ) = P ( A ) + P ( B ) </li>
+<h2>Koşullu Olasılık </h2>
+P(B\A) => A olayı gerçekleştiği <b>bilindiğinde</b> B olayının gerçekleşme olasılığı demektir.<br>
+P(B\A) = P(B ∩ A) * P(A) / P(A) => A olayının gerçekleştiği bilindiğinde B olayının olma olasılığı; A ve B olayının aynı anda olma olasılığının A olayının olasılığı ile çarpımının A olayının olma olasılığına bölümüdür. <br>
+P(BA) = P(AB) = P(B ∩ A) = P(A ∩ B) = P(A \ B) * P(B) = P(B \ A) * P(A) <br>
+
+<h2>Bayes Teoremi</h2>
+Bayes teoremi sonuçlarla değil nedenlerle ilgilenir. Bir B olayı olduğunda bunun sebebinin Aj olayının olma olasılığı ile ilgilenir.<br>
+P(Aj\B) = P(B\Aj) * P(Aj) / P(B\A1) * P(A1) + ... + P(B\Aj) * P(Aj) <br>
+B olayının marjinal olasılığı ise P(B\A1) * P(B\A1) + ... + P(B\Aj) * P(Aj)
+
+
+<h4>Bayesgil Olasılık ile Karar Ağacı Sorusu ve Çözümü (Mutlu Gürsoy Hoca'nın Sorusu)</h4>
+Bir TV programları yapımcı firması büyük bir televizyon ağına satmak umuduyla
+komedi dizisi için bir pilot yapım yapmayı düşünüyor.<br>Ağ, diziyi <b>reddetmeye karar verebilir</b>, ancak dizinin haklarını <b>bir veya iki yıllığına</b> satın almaya da karar verebilir. <br>Bu noktada yapımcı firma, pilot diziyi üretip ağın kararını bekleyebilir ya da pilot ve dizinin haklarını 100.000 $ kâr ile bir rakibe devredebilir. Yapımcının karar alternatifleri ve kârları (bin dolar cinsinden) aşağıdaki gibidir.
+
+<div class="chunk" id="unnamed-chunk-3"><div class="rcode"><div class="output"><pre class="knitr r">##                   Ret.s1. Yıl1.s2. Yıl2.s3.
+## Pilot Üretim (P)   -100.0     50.0    150.0
+## Hakları Sat (H)     100.0    100.0    100.0
+## Önsel Olasılıklar     0.2      0.3      0.5
+</pre></div>
+</div></div>
+
+Bu durumda hiç hesaplamadan en iyi beklenen değerin Hakları Sat alternatifinde olduğunu (100.000$) görebiliriz.<br>
+EVPI ise;
+
+<div class="chunk" id="unnamed-chunk-4"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">EVPI</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">sum</span><span class="hl std">(df[</span><span class="hl num">3</span><span class="hl opt">:</span><span class="hl num">3</span><span class="hl std">,</span><span class="hl num">1</span><span class="hl opt">:</span><span class="hl num">3</span><span class="hl std">]</span> <span class="hl opt">*</span> <span class="hl kwd">sapply</span><span class="hl std">(df[</span><span class="hl num">1</span><span class="hl opt">:</span><span class="hl num">2</span><span class="hl std">,</span><span class="hl num">1</span><span class="hl opt">:</span><span class="hl num">3</span><span class="hl std">],max))</span> <span class="hl opt">-</span> <span class="hl num">100</span>
+<span class="hl std">EVPI</span> <span class="hl com"># bin dolar (k $)</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## [1] 25
+</pre></div>
+</div></div>
+
+Şimdi varsayalım, 5000$’lık danışmanlık ücreti karşılığında bir ajans, komedi dizisinin planlarını gözden geçirecek ve televizyon ağının diziye yönelik pozitif veya negatif tepki verme olasılıklarını belirleyecektir. Ajans incelemesinin olumlu (P) veya olumsuz (N) bir incelemeyle sonuçlanacağını ve aşağıdaki önsel olasılıkları belirlediğimizi varsayalım<br> <b>[P(satır\sütun)]</b>
+
+<div class="chunk" id="unnamed-chunk-5"><div class="rcode"><div class="output"><pre class="knitr r">##             Pozitif Negatif
+## s1             0.09    0.45
+## s2             0.26    0.39
+## s3             0.65    0.16
+## Olasılıklar    0.69    0.31
+</pre></div>
+</div></div>
+
+Önce 2 karar alternatifimiz olacak; danışmanlık al ve danışmanlık almadan karar ver. Eğer danışmanlık alırsak danışmanlık sonrası elde edilecek bilgiye (bu soru için pozitif veya negatif rapor) göre 2 alternatifimiz daha olacaktır. Aynı şekilde eğer ilk başta alternatif 2'yi seçersek ve danışmanlık almama kararı verirsek bunun sonucunda da 2 adet daha alternatifimiz olacaktır ki bu soruya danışmanlık durumu dahil olmadan önceki durumdur. Bu durumda karar ağacımız şu şekilde olacaktır.<br>
+<img src='./static/saf-karar-agaci.png'><br><br>
+
+Şimdi de karar ağacımızda beklenen değerleri hesaplayalım ve beklenen değer kriterine göre alternatifleri eleyerek ilk düğüme ulaşmaya çalışalım. (Karar ağaçlarının çözümü en sondan [sonuçlardan] başlanır, çünkü bu noktadan daha ileri gidilebilecek bir nokta yoktur) <br>
+
+Çözüm incelendiğinde <b>danışmanlık almadan haklarını sat</b> kararına ulaşırız.<br>
+
+EVSI = EVwSI - EVwoSI = 96.035 + 5 (5 eklememizin sebebi danışmanlık ücretini dahil etmememiz) - 100 = 1.035 <br>
+
+E = (EVSI / EVPI) x 100 = (1.035 / 100) * 100 = 1.035 $ Yani örnek bilginin değeri 1035$ olacaktır. Maliyetsiz bir ilave bilgi alamayacağımıza göre 1035$ üzerinde maliyeti olan ilave bilgi verimsiz olacaktır.<br>
+
+<img src='./static/karar-agaci.png'>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
