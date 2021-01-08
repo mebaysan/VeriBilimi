@@ -1,3 +1,6 @@
+# Birden fazla bağımsız değişken üzerine uygulanabilmektedir.
+# Veriler normal dağılım gösterdiğinde tercih edilebilecek bir testtir.
+
 # veriler sürekli olmalıdır
 # normal dağılım göstermeleri gerekir
 # gruplar bazında bakarız
@@ -11,4 +14,4 @@ boxplot(df$Sepal.Width ~ as.character(df$Species))
 # H0: Varyanslar homojendir
 # H1: Varyanslar homojen değildir
 # p-value > 0.05 ise H0 hipotezi reddedilemez
-bartlett.test(df$Sepal.Width ~ as.character(df$Species))
+bartlett.test(df$Sepal.Width ~ as.character(df$Species)) # sol taraf bağımlı değişken sağ tarafsız bağımsız değişken
