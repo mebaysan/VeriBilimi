@@ -136,3 +136,5 @@ dmypy.json
 .Rhistory
 .
 .RData
+*.csv
+*.xlsx
