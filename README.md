@@ -33,14 +33,36 @@
 Bu repoyu **Veri Bilimi** konu başlığı altında **Yoldaki Notlar**'ımı paylaşabilmek için hazırlamaya çalışıyorum. <br>
 ## Kaynaklar
 Okuduğum, izlediğim, öğrendiğim kaynaklar:
-* [Yeni Başlayanlar İçin Veri Bilimine Giriş (Online Kurs)](https://www.udemy.com/course/yeni-baslayanlar-icin-veri-bilimine-giris/) - Data Forest TR
-* [Veri Bilimi Ve Yapay Zekaya Giriş (Online Kurs)](https://www.udemy.com/course/veri-bilimi-ve-yapay-zekaya-giris/) - Vahit Keskin
-* [Python A-Z: Veri Bilimi ve Machine Learning (Online Kurs)](https://www.udemy.com/course/python-egitimi/) - Vahit Keskin & [Veri Bilimi Okulu](https://www.veribilimiokulu.com/)
-* [Bilgi ve Bilginin Yönetimi (Kitap)](http://www.papatya.gen.tr/bilgiVeBilgininYonetimi.htm) - Doç. Dr. Sevinç Gülseçen (Editör)
-* [Bilgi Yönetimi (Kitap)](http://www.papatya.gen.tr/bilgi_yonetimi_buyuk_veri_inovasyon.htm) - Prof. Dr. Sevinç Gülseçen (Editör)
-* [Olasılık ve İstatistik (Kitap)](https://www.amazon.com.tr/Olas%C4%B1l%C4%B1k-ve-%C4%B0statistik-Fikri-Akdeniz/dp/6052396415) - Prof. Dr. Fikri Akdeniz
+* [Yeni Başlayanlar İçin Veri Bilimine Giriş (Online Eğitim)](https://www.udemy.com/course/yeni-baslayanlar-icin-veri-bilimine-giris/)
+* [Veri Bilimi Ve Yapay Zekaya Giriş (Online Eğitim)](https://www.udemy.com/course/veri-bilimi-ve-yapay-zekaya-giris/)
+* [Python A-Z: Veri Bilimi ve Machine Learning (Online Eğitim)](https://www.udemy.com/course/python-egitimi/)
+* [Bilgi ve Bilginin Yönetimi (Kitap)](http://www.papatya.gen.tr/bilgiVeBilgininYonetimi.htm)
+* [Bilgi Yönetimi (Kitap)](http://www.papatya.gen.tr/bilgi_yonetimi_buyuk_veri_inovasyon.htm)
+* [Olasılık ve İstatistik (Kitap)](https://www.amazon.com.tr/Olas%C4%B1l%C4%B1k-ve-%C4%B0statistik-Fikri-Akdeniz/dp/6052396415)
 * [Stanford Üniversitesi Makine Öğrenmesi El Kitabı (PDF)](https://stanford.edu/~shervine/l/tr/teaching/cs-229/)
-* [Çıplak İstatistik (Kitap)](https://www.amazon.com.tr/%C3%87%C4%B1plak-%C4%B0statistik-art%C4%B1k-kolay-zevkli/dp/6058213258) - Charles Wheelan
+* [Çıplak İstatistik (Kitap)](https://www.amazon.com.tr/%C3%87%C4%B1plak-%C4%B0statistik-art%C4%B1k-kolay-zevkli/dp/6058213258)
+* [DataCamp](https://www.datacamp.com/)
+* [Intro to Statistics (Online Eğitim)](https://www.udacity.com/course/intro-to-statistics--st101)
+* [Statistics (Online Eğitim)](https://www.udacity.com/course/statistics--st095)
+* [Intro to Descriptive Statistics (Online Eğitim)](https://www.udacity.com/course/intro-to-descriptive-statistics--ud827)
+* [Intro to Inferential Statistics (Online Eğitim)](https://www.udacity.com/course/intro-to-inferential-statistics--ud201)
+* [Ayrık Matematik ve Uygulamaları (Kitap)](https://www.amazon.com.tr/Ayr%C4%B1k-Matematik-Uygulamalar%C4%B1-Kenneth-Rosen/dp/6053553573/)
+* [Uygulamalı Lineer Cebir (Kitap)](https://www.amazon.com.tr/Uygulamal%C4%B1-Lineer-Cebir-Bernard-Kolman/dp/6055829878)
+* [Kantitatif Karar Verme Teknikleri (Kitap)](https://www.amazon.com.tr/Kantitatif-Karar-Verme-Teknikleri-Ara%C5%9Ft%C4%B1rmas%C4%B1/dp/9753167407/)
+* [Yöneylem Araştırması (Kitap)](https://www.amazon.com.tr/Y%C3%B6neylem-Ara%C5%9Ft%C4%B1rmas%C4%B1-6-Bas%C4%B1mdan-%C3%87eviri/dp/9758431064/)
+* [Olasılık Teorisi ve Stokastik Süreçler (Kitap)](https://www.amazon.com.tr/Olas%C4%B1l%C4%B1k-Teorisi-ve-Stokastik-S%C3%BCre%C3%A7ler/dp/6054220764)
+* [100 İstatistiksel Test (Kitap)](https://www.amazon.com.tr/Statistical-Tests-Third-Gopal-Kanji/dp/141292376X/)
+* [Bilgisayar Mühendisliği Matematiği (Kitap)](https://www.amazon.com.tr/Bilgisayar-M%C3%BChendisli%C4%9Fi-Matemati%C4%9Fi-Uygulamal%C4%B1-Matematik/dp/6059594654)
+* [Makine Öğrenmesi ve Derin Öğrenme İçin R Uygulamalı Doğrusal Cebir (Kitap)](https://www.amazon.com.tr/Makine-%C3%96%C4%9Frenmesi-%C3%96%C4%9Frenme-Uygulamal%C4%B1-Do%C4%9Frusal/dp/6052472073)
+* [Kombinatorik ve Elementer Olasılık Teorisine Giriş (Kitap)](https://www.google.com/search?q=Kombinatorik+ve+Elementer+Olas%C4%B1l%C4%B1k+Teorisine+Giri%C5%9F&safe=strict&sxsrf=ALeKk00QPXELGclGLpKF_JEJnvxRb4GiSg:1613783795744&source=lnms&tbm=isch&sa=X&ved=2ahUKEwj2wY6PpffuAhXOo4sKHa2cDccQ_AUoAXoECAQQAw&cshid=1613783822080832&biw=1440&bih=821)
+* [Karar Verme (Kitap)](https://www.amazon.com.tr/Karar-Verme-M-Mustafa-Ayta%C3%A7/dp/6059929273)
+* [Betimsel İstatistik (Kitap)](https://www.amazon.com.tr/Karar-Verme-M-Mustafa-Ayta%C3%A7/dp/6059929273)
+* [Çıkarımsal İstatistik (Kitap)](https://www.amazon.com.tr/%C3%87IKARIMSAL-%C4%B0STAT%C4%B0ST%C4%B0K-Necmi-G%C3%BCrsakal/dp/6054485814)
+* [R ile Betimsel İstatistik (Kitap)](https://www.amazon.com.tr/ile-Betimsel-%C4%B0statistik-Necmi-G%C3%BCrsakal/dp/6059666272)
+* [R ile Çıkarımsal İstatistik (Kitap)](https://www.amazon.com.tr/%C4%B0le-%C3%87%C4%B1kar%C4%B1msal-%C4%B0statistik-Necmi-G%C3%BCrsakal/dp/9752447104)
+* [Python ile Veri Bilimi (Kitap)](https://www.amazon.com.tr/Python-Veri-Bilimi-%C4%B0lker-Arslan/dp/6052359641)
+* [R İle İstatistiksel Programlama: Veri Analitiği İçin Yeni Bir Yazılım Platformu (Kitap)](https://www.amazon.com.tr/%C4%B0le-%C4%B0statistiksel-Programlama-%C4%B0lker-Arslan/dp/6056460894)
+* [Çok Değişkenli İstatistiklerin Kullanımı (Kitap)](https://www.amazon.com.tr/De%C4%9Fi%C5%9Fkenli-%C4%B0statistiklerin-Kullan%C4%B1m%C4%B1-Linda-Fidell/dp/6053202509)
 
 # Bilgi Nedir?
 Felsefe disiplininde, bilgi teorisinin odağında ünlü filozof Plato'nun bilginin doğasıyla ilgili düşünceleri yer almaktadır. Ona göre, bilginin hem gerekçelendirilmiş hem doğru hem de inanılır olma kriterlerini karşılaması gerekmektedir; onun ünlü tanımıyla bilgi, **gerekçelendirilmiş doğru inançtır** ("justified true belief")(Musgrave,1993).
